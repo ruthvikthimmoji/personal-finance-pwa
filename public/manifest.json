@@ -1,0 +1,18 @@
+{
+  "short_name": "FinanceApp",
+  "name": "Personal Finance Tracker",
+  "description": "Mobile Personal Finance Tracker synced with Google Sheets",
+  "icons": [
+    {
+      "src": "/icon-192.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192 512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#090d16",
+  "theme_color": "#090d16",
+  "display": "standalone",
+  "orientation": "portrait"
+}

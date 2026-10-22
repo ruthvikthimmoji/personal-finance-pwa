@@ -3,6 +3,7 @@ import { Header } from './components/Header';
 import { BottomNav, MainTab } from './components/BottomNav';
 import { DashboardView } from './components/DashboardView';
 import { HistoryView } from './components/HistoryView';
+import { AccountsView } from './components/AccountsView';
 import { SettingsView } from './components/SettingsView';
 import { BalanceLoggerSheet } from './components/BalanceLoggerSheet';
 import { InvestmentLoggerSheet } from './components/InvestmentLoggerSheet';
@@ -91,7 +92,7 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#0A0F0D] text-[#F1F5F3] flex flex-col font-sans">
-      {/* Persistent Offline Banner (Page 9) */}
+      {/* Persistent Offline Banner */}
       {isOffline && (
         <div className="bg-[#FBBF24]/15 border-b border-[#FBBF24]/30 px-4 py-2 flex items-center justify-center gap-2 text-xs text-[#FBBF24]">
           <WifiOff className="w-3.5 h-3.5" />
@@ -131,6 +132,13 @@ export const App: React.FC = () => {
           />
         )}
 
+        {activeTab === 'accounts' && (
+          <AccountsView
+            data={data}
+            isPrivate={isPrivate}
+          />
+        )}
+
         {activeTab === 'settings' && (
           <SettingsView
             onRefreshData={loadData}
@@ -162,13 +170,13 @@ export const App: React.FC = () => {
         onSelectInvest={() => setIsInvestSheetOpen(true)}
       />
 
-      {/* Toast Notification Banner (appears above tab bar, lasts 3s) */}
+      {/* Toast Notification Banner */}
       <ToastBanner
         message={toastMessage}
         onDismiss={() => setToastMessage(null)}
       />
 
-      {/* Fixed Bottom Navigation (Page 8) */}
+      {/* Symmetrical Fixed Bottom Navigation */}
       <BottomNav
         activeTab={activeTab}
         onChangeTab={setActiveTab}

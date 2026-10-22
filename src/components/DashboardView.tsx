@@ -131,7 +131,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           className="h-[52px] rounded-[14px] bg-[#10B981] hover:bg-[#34D399] active:scale-[0.98] active:bg-[#047857] text-[#0A0F0D] font-semibold text-[15px] flex items-center justify-center gap-2 shadow-sm transition-all"
         >
           <Plus className="w-5 h-5 text-[#0A0F0D]" strokeWidth={2.5} />
-          <span>+ Balance</span>
+          <span>Balance</span>
         </button>
 
         {/* Secondary button: elevated surface, subtle border, light text, 52px tall */}
@@ -141,7 +141,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           className="h-[52px] rounded-[14px] bg-[#17231E] hover:bg-[#223029] active:scale-[0.98] border border-[#223029] text-[#F1F5F3] font-semibold text-[15px] flex items-center justify-center gap-2 transition-all"
         >
           <Plus className="w-5 h-5 text-[#9AA9A2]" strokeWidth={2} />
-          <span>+ Invest</span>
+          <span>Invest</span>
         </button>
       </div>
 

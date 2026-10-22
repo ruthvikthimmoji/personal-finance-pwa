@@ -15,8 +15,6 @@ import {
   EyeOff,
   ChevronDown,
   ChevronUp,
-  Trash2,
-  ShieldCheck,
   FileSpreadsheet,
 } from 'lucide-react';
 
@@ -265,15 +263,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   const [hasCopied, setHasCopied] = useState(false);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
 
-  const currentOrigin = typeof window !== 'undefined' ? window.location.origin : 'http://192.168.1.4:5173';
-  const phoneUrl = currentOrigin.includes('localhost') ? 'http://192.168.1.4:5173' : currentOrigin;
-
-  // Masked URL presentation (Page 11: first 20 characters, then ••••)
-  const getMaskedUrl = (raw: string) => {
-    if (!raw) return '';
-    if (raw.length <= 20) return raw;
-    return raw.slice(0, 20) + '••••••••';
-  };
+  const currentOrigin = typeof window !== 'undefined' ? window.location.origin : 'http://192.168.1.4:5174';
+  const phoneUrl = currentOrigin.includes('localhost') ? 'http://192.168.1.4:5174' : currentOrigin;
 
   const handleSave = () => {
     saveScriptUrl(url);
@@ -284,7 +275,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
 
   const handleTestConnection = async () => {
     if (!url.trim()) {
-      setStatusMessage('Enter a Web App URL first');
+      setStatusMessage('Enter an amount in rupees, for example 25,000');
       setSyncStatus('error');
       return;
     }
@@ -326,8 +317,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
     <div className="space-y-4 pb-28 px-4 max-w-lg mx-auto">
       {/* Title */}
       <div className="px-1 pt-1">
-        <h2 className="typography-title text-[#F1F5F3]">Settings</h2>
-        <p className="typography-caption text-[#9AA9A2] mt-0.5">
+        <h2 className="typography-title text-[#F4F6FF]">Settings</h2>
+        <p className="typography-caption text-[#A3ACD1] mt-0.5">
           Sync, privacy and configuration
         </p>
       </div>
@@ -337,33 +328,33 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         href="https://docs.google.com/spreadsheets/d/1al3dZQcq-FOASXxkfYKt_-gvbolvGMqLjTS32EWvXjQ/edit?gid=11885255#gid=11885255"
         target="_blank"
         rel="noreferrer"
-        className="bg-[#111A16] border border-[#223029] rounded-[20px] p-4 flex items-center justify-between hover:bg-[#17231E]/40 active:bg-[#17231E] transition-all"
+        className="bg-[#121830] border border-[#262F57] rounded-[20px] p-4 flex items-center justify-between hover:bg-[#1A2142]/40 active:bg-[#1A2142] transition-all"
       >
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center text-[#10B981]">
+          <div className="w-9 h-9 rounded-xl bg-[#5B6CFF]/15 border border-[#5B6CFF]/30 flex items-center justify-center text-[#5B6CFF]">
             <FileSpreadsheet className="w-5 h-5" strokeWidth={1.75} />
           </div>
           <div>
-            <div className="typography-body font-semibold text-[#F1F5F3]">
+            <div className="typography-body font-semibold text-[#F4F6FF]">
               Open Google Sheet
             </div>
-            <div className="typography-caption text-[#9AA9A2]">
+            <div className="typography-caption text-[#A3ACD1]">
               Personal Finance Tracker
             </div>
           </div>
         </div>
-        <ExternalLink className="w-5 h-5 text-[#9AA9A2]" strokeWidth={1.75} />
+        <ExternalLink className="w-5 h-5 text-[#A3ACD1]" strokeWidth={1.75} />
       </a>
 
       {/* Sync Card */}
-      <div className="bg-[#111A16] border border-[#223029] rounded-[20px] p-4 space-y-3">
+      <div className="bg-[#121830] border border-[#262F57] rounded-[20px] p-4 space-y-3">
         <div className="flex items-center justify-between">
-          <h3 className="typography-label uppercase tracking-wider text-[#9AA9A2]">
+          <h3 className="typography-label uppercase tracking-wider text-[#A3ACD1]">
             Google Sheets sync
           </h3>
           {syncStatus === 'connected' && (
-            <span className="inline-flex items-center gap-1 text-xs text-[#10B981] font-medium">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+            <span className="inline-flex items-center gap-1 text-xs text-[#34D3A0] font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#34D3A0]" />
               Connected
             </span>
           )}
@@ -377,12 +368,12 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               placeholder="https://script.google.com/macros/s/.../exec"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
-              className="w-full h-[56px] pl-4 pr-12 rounded-[14px] bg-[#17231E] border border-[#223029] text-[16px] text-[#F1F5F3] placeholder-[#64736C] focus:outline-none focus:border-[#34D399] focus:ring-2 focus:ring-[#34D399]/20 font-mono text-sm"
+              className="w-full h-[56px] pl-4 pr-12 rounded-[14px] bg-[#1A2142] border border-[#262F57] text-[16px] text-[#F4F6FF] placeholder-[#6B7499] focus:outline-none focus:border-[#8E9BFF] focus:ring-2 focus:ring-[#8E9BFF]/20 font-mono text-sm"
             />
             <button
               type="button"
               onClick={() => setIsUrlRevealed(!isUrlRevealed)}
-              className="absolute right-3 p-1.5 text-[#9AA9A2] hover:text-[#F1F5F3]"
+              className="absolute right-3 p-1.5 text-[#A3ACD1] hover:text-[#F4F6FF]"
               title={isUrlRevealed ? 'Hide URL' : 'Reveal URL'}
             >
               {isUrlRevealed ? (
@@ -398,10 +389,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               type="button"
               onClick={handleTestConnection}
               disabled={isTesting}
-              className="h-[44px] rounded-[14px] bg-[#17231E] hover:bg-[#223029] active:scale-[0.98] border border-[#223029] text-[#F1F5F3] font-semibold text-xs flex items-center justify-center gap-2 transition-all disabled:opacity-40"
+              className="h-[44px] rounded-[14px] bg-[#1A2142] hover:bg-[#262F57] active:scale-[0.98] border border-[#262F57] text-[#F4F6FF] font-semibold text-xs flex items-center justify-center gap-2 transition-all disabled:opacity-40"
             >
               {isTesting ? (
-                <span className="w-4 h-4 border-2 border-[#F1F5F3] border-t-transparent rounded-full animate-spin" />
+                <span className="w-4 h-4 border-2 border-[#F4F6FF] border-t-transparent rounded-full animate-spin" />
               ) : (
                 <span>Test connection</span>
               )}
@@ -410,7 +401,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             <button
               type="button"
               onClick={handleSave}
-              className="h-[44px] rounded-[14px] bg-[#10B981] hover:bg-[#34D399] active:scale-[0.98] active:bg-[#047857] text-[#0A0F0D] font-semibold text-xs flex items-center justify-center transition-all"
+              className="h-[44px] rounded-[14px] bg-[#3D4AD6] hover:bg-[#5B6CFF] active:scale-[0.98] active:bg-[#303BB8] text-white font-semibold text-xs flex items-center justify-center transition-all"
             >
               Save
             </button>
@@ -420,10 +411,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             <p
               className={`typography-caption pt-1 ${
                 syncStatus === 'connected'
-                  ? 'text-[#10B981]'
+                  ? 'text-[#34D3A0]'
                   : syncStatus === 'error'
-                  ? 'text-[#F87171]'
-                  : 'text-[#9AA9A2]'
+                  ? 'text-[#FF6E8A]'
+                  : 'text-[#A3ACD1]'
               }`}
             >
               {statusMessage}
@@ -433,21 +424,21 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       </div>
 
       {/* 1-Minute Setup Guide (Collapsible) */}
-      <div className="bg-[#111A16] border border-[#223029] rounded-[20px] overflow-hidden">
+      <div className="bg-[#121830] border border-[#262F57] rounded-[20px] overflow-hidden">
         <button
           type="button"
           onClick={() => setIsGuideOpen(!isGuideOpen)}
-          className="w-full p-4 flex items-center justify-between text-left hover:bg-[#17231E]/40 transition-colors"
+          className="w-full p-4 flex items-center justify-between text-left hover:bg-[#1A2142]/40 transition-colors"
         >
           <div>
-            <div className="typography-body font-semibold text-[#F1F5F3]">
+            <div className="typography-body font-semibold text-[#F4F6FF]">
               Setup guide
             </div>
-            <div className="typography-caption text-[#9AA9A2]">
+            <div className="typography-caption text-[#A3ACD1]">
               Connect your Google Sheet in 1 minute
             </div>
           </div>
-          <div className="text-[#9AA9A2]">
+          <div className="text-[#A3ACD1]">
             {isGuideOpen ? (
               <ChevronUp className="w-5 h-5" strokeWidth={1.75} />
             ) : (
@@ -457,24 +448,24 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         </button>
 
         {isGuideOpen && (
-          <div className="px-4 pb-4 pt-1 border-t border-[#223029] bg-[#17231E]/30 space-y-3">
+          <div className="px-4 pb-4 pt-1 border-t border-[#262F57] bg-[#1A2142]/30 space-y-3">
             <div className="flex justify-end pt-1">
               <button
                 type="button"
                 onClick={handleCopyScript}
-                className="h-9 px-3 rounded-[10px] bg-[#10B981] text-[#0A0F0D] font-semibold text-xs inline-flex items-center gap-1.5 active:scale-95"
+                className="h-9 px-3 rounded-[10px] bg-[#3D4AD6] text-white font-semibold text-xs inline-flex items-center gap-1.5 active:scale-95"
               >
                 {hasCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                 <span>{hasCopied ? 'Copied' : 'Copy script code'}</span>
               </button>
             </div>
 
-            <ol className="typography-caption text-[#9AA9A2] space-y-2 list-decimal list-inside leading-relaxed">
-              <li>In your Google Sheet, open <strong className="text-[#F1F5F3]">Extensions &gt; Apps Script</strong>.</li>
-              <li>Delete all existing code, paste the copied script, and click <strong className="text-[#F1F5F3]">Save</strong>.</li>
-              <li>Click <strong className="text-[#F1F5F3]">Deploy &gt; New deployment</strong>.</li>
-              <li>Select type <strong className="text-[#F1F5F3]">Web app</strong>.</li>
-              <li>Set Execute as: <strong className="text-[#F1F5F3]">Me</strong>, Who has access: <strong className="text-[#F1F5F3]">Anyone</strong>.</li>
+            <ol className="typography-caption text-[#A3ACD1] space-y-2 list-decimal list-inside leading-relaxed">
+              <li>In your Google Sheet, open <strong className="text-[#F4F6FF]">Extensions &gt; Apps Script</strong>.</li>
+              <li>Delete all existing code, paste the copied script, and click <strong className="text-[#F4F6FF]">Save</strong>.</li>
+              <li>Click <strong className="text-[#F4F6FF]">Deploy &gt; New deployment</strong>.</li>
+              <li>Select type <strong className="text-[#F4F6FF]">Web app</strong>.</li>
+              <li>Set Execute as: <strong className="text-[#F4F6FF]">Me</strong>, Who has access: <strong className="text-[#F4F6FF]">Anyone</strong>.</li>
               <li>Click Deploy, approve permissions (click Advanced &gt; Go to project), and paste your Web App URL above.</li>
             </ol>
           </div>
@@ -482,29 +473,29 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       </div>
 
       {/* Open on Phone QR Code */}
-      <div className="bg-[#111A16] border border-[#223029] rounded-[20px] p-4 space-y-3">
-        <h3 className="typography-label uppercase tracking-wider text-[#9AA9A2]">
+      <div className="bg-[#121830] border border-[#262F57] rounded-[20px] p-4 space-y-3">
+        <h3 className="typography-label uppercase tracking-wider text-[#A3ACD1]">
           Open on your phone
         </h3>
 
-        <div className="flex items-center gap-4 bg-[#17231E] p-3 rounded-[14px] border border-[#223029]">
+        <div className="flex items-center gap-4 bg-[#1A2142] p-3 rounded-[14px] border border-[#262F57]">
           <div className="bg-white p-2 rounded-[10px] shrink-0">
             <QRCodeSVG
               value={phoneUrl}
               size={100}
               bgColor="#ffffff"
-              fgColor="#0A0F0D"
+              fgColor="#0B0F1E"
               level="M"
             />
           </div>
-          <div className="space-y-1 typography-caption text-[#9AA9A2]">
-            <p className="font-semibold text-[#F1F5F3]">
+          <div className="space-y-1 typography-caption text-[#A3ACD1]">
+            <p className="font-semibold text-[#F4F6FF]">
               Scan with your camera
             </p>
             <p>
               Instantly opens this app on your phone. Then tap "Add to Home Screen".
             </p>
-            <div className="pt-1 text-[11px] font-mono text-[#10B981] break-all">
+            <div className="pt-1 text-[11px] font-mono text-[#5B6CFF] break-all">
               {phoneUrl}
             </div>
           </div>
@@ -512,15 +503,15 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       </div>
 
       {/* Privacy & Cache (Section 10) */}
-      <div className="bg-[#111A16] border border-[#223029] rounded-[20px] p-4 space-y-3">
-        <h3 className="typography-label uppercase tracking-wider text-[#9AA9A2]">
+      <div className="bg-[#121830] border border-[#262F57] rounded-[20px] p-4 space-y-3">
+        <h3 className="typography-label uppercase tracking-wider text-[#A3ACD1]">
           Privacy & Data
         </h3>
 
         <div className="flex items-center justify-between py-1">
           <div>
-            <div className="typography-body text-[#F1F5F3]">Privacy mode</div>
-            <div className="typography-caption text-[#9AA9A2]">
+            <div className="typography-body text-[#F4F6FF]">Privacy mode</div>
+            <div className="typography-caption text-[#A3ACD1]">
               Masks money amounts as ₹•••••• in public
             </div>
           </div>
@@ -528,7 +519,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             type="button"
             onClick={onTogglePrivacy}
             className={`w-12 h-7 rounded-full p-1 transition-colors ${
-              isPrivate ? 'bg-[#10B981]' : 'bg-[#223029]'
+              isPrivate ? 'bg-[#5B6CFF]' : 'bg-[#262F57]'
             }`}
           >
             <div
@@ -539,17 +530,17 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           </button>
         </div>
 
-        <div className="pt-2 border-t border-[#223029] flex items-center justify-between">
+        <div className="pt-2 border-t border-[#262F57] flex items-center justify-between">
           <div>
-            <div className="typography-body text-[#F1F5F3]">Local cache</div>
-            <div className="typography-caption text-[#9AA9A2]">
+            <div className="typography-body text-[#F4F6FF]">Local cache</div>
+            <div className="typography-caption text-[#A3ACD1]">
               Reset cached entries to sheet defaults
             </div>
           </div>
           <button
             type="button"
             onClick={() => setShowClearConfirm(true)}
-            className="h-9 px-3 rounded-[10px] border border-[#F87171]/40 text-[#F87171] hover:bg-[#F87171]/10 text-xs font-medium active:scale-[0.98]"
+            className="h-9 px-3 rounded-[10px] border border-[#FF6E8A]/40 text-[#FF6E8A] hover:bg-[#FF6E8A]/10 text-xs font-medium active:scale-[0.98]"
           >
             Clear data
           </button>
@@ -558,22 +549,22 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
 
       {/* Clear Cache Confirmation Dialog */}
       {showClearConfirm && (
-        <div className="p-4 rounded-[14px] bg-[#17231E] border border-[#F87171]/40 space-y-2.5">
-          <p className="typography-body text-[#F1F5F3]">
+        <div className="p-4 rounded-[14px] bg-[#1A2142] border border-[#FF6E8A]/40 space-y-2.5">
+          <p className="typography-body text-[#F4F6FF]">
             Clear local cache? Your Google Sheet data will not be affected.
           </p>
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={handleClearData}
-              className="h-9 px-4 rounded-[10px] bg-[#F87171] text-[#0A0F0D] font-semibold text-xs"
+              className="h-9 px-4 rounded-[10px] bg-[#FF6E8A] text-[#0B0F1E] font-semibold text-xs"
             >
               Yes, clear
             </button>
             <button
               type="button"
               onClick={() => setShowClearConfirm(false)}
-              className="h-9 px-4 rounded-[10px] bg-[#223029] text-[#F1F5F3] font-semibold text-xs"
+              className="h-9 px-4 rounded-[10px] bg-[#262F57] text-[#F4F6FF] font-semibold text-xs"
             >
               Cancel
             </button>
@@ -582,14 +573,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       )}
 
       {/* About & Trust Section (Section 10) */}
-      <div className="p-4 bg-[#111A16] border border-[#223029] rounded-[20px] space-y-2">
-        <h3 className="typography-label uppercase tracking-wider text-[#9AA9A2]">
+      <div className="p-4 bg-[#121830] border border-[#262F57] rounded-[20px] space-y-2">
+        <h3 className="typography-label uppercase tracking-wider text-[#A3ACD1]">
           About & Trust
         </h3>
-        <p className="typography-caption text-[#9AA9A2] leading-relaxed">
+        <p className="typography-caption text-[#A3ACD1] leading-relaxed">
           Data lives in your own Google Sheet and on this device. There are no third-party servers, no analytics, no ads, and no data sales.
         </p>
-        <div className="flex items-center justify-between pt-2 border-t border-[#223029] typography-caption text-[#64736C]">
+        <div className="flex items-center justify-between pt-2 border-t border-[#262F57] typography-caption text-[#6B7499]">
           <span>Personal Finance Tracker</span>
           <span>Version 1.0</span>
         </div>

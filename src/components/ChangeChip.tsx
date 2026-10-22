@@ -16,7 +16,7 @@ export const ChangeChip: React.FC<ChangeChipProps> = ({
 }) => {
   if (isPrivate) {
     return (
-      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[#17231E] text-[#9AA9A2] border border-[#223029]">
+      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[#1A2142] text-[#A3ACD1] border border-[#262F57]">
         ••••••
       </span>
     );
@@ -24,34 +24,27 @@ export const ChangeChip: React.FC<ChangeChipProps> = ({
 
   if (amount === undefined || amount === null || amount === 0) {
     return (
-      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[#17231E] text-[#64736C]">
+      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[#1A2142] text-[#6B7499]">
         —
       </span>
     );
   }
 
   const isPositive = amount > 0;
-  const isNegative = amount < 0;
 
   // Format amount with Indian grouping
   const formattedAmount = formatMoney(amount, { isChange: false });
 
-  // Token colors from Page 4:
-  // positive: #10B981
-  // negative: #F87171 (soft red)
+  // Semantic tokens from Page 4:
+  // positive: #34D3A0 (mint)
+  // negative: #FF6E8A (soft coral)
   const colorClasses = isPositive
-    ? 'bg-[#10B981]/15 text-[#10B981] border-[#10B981]/25'
-    : 'bg-[#F87171]/15 text-[#F87171] border-[#F87171]/25';
+    ? 'bg-[#34D3A0]/15 text-[#34D3A0] border-[#34D3A0]/25'
+    : 'bg-[#FF6E8A]/15 text-[#FF6E8A] border-[#FF6E8A]/25';
 
   const arrow = isPositive ? '▲' : '▼';
   const sign = isPositive ? PLUS_SIGN : MINUS_SIGN;
   const displayAmount = formattedAmount.replace('-', '').replace(MINUS_SIGN, '');
-
-  let labelText = `${arrow} ${sign}${displayAmount}`;
-  if (percent !== undefined && percent !== null) {
-    const pctStr = `${Math.abs(percent).toFixed(1)}%`;
-    labelText = `${arrow} ${sign}${displayAmount} (${sign}${pctStr})`;
-  }
 
   return (
     <span

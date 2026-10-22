@@ -53,10 +53,8 @@ export const InvestmentLoggerSheet: React.FC<InvestmentLoggerSheetProps> = ({
 
   if (!isOpen) return null;
 
-  // Previous total investment value
   const prevTotalValue = data.summary.currentInvestmentValue;
 
-  // Compute live totals
   let newTotalInvested = 0;
   let newTotalEarnings = 0;
 
@@ -131,7 +129,7 @@ export const InvestmentLoggerSheet: React.FC<InvestmentLoggerSheetProps> = ({
           particleCount: 50,
           spread: 55,
           origin: { y: 0.8 },
-          colors: ['#10B981', '#60A5FA', '#34D399'],
+          colors: ['#5B6CFF', '#22D3EE', '#34D3A0'],
           disableForReducedMotion: true,
         });
       }
@@ -157,30 +155,30 @@ export const InvestmentLoggerSheet: React.FC<InvestmentLoggerSheetProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 backdrop-blur-sm animate-fade-in">
       <div
-        className="w-full max-w-lg bg-[#111A16] border-t border-[#223029] rounded-t-[24px] max-h-[90vh] flex flex-col shadow-2xl sheet-transition"
+        className="w-full max-w-lg bg-[#121830] border-t border-[#262F57] rounded-t-[24px] max-h-[90vh] flex flex-col shadow-2xl sheet-transition"
         role="dialog"
         aria-modal="true"
         aria-labelledby="invest-sheet-title"
       >
         {/* Drag handle */}
         <div className="w-full flex items-center justify-center pt-3 pb-1 cursor-grab">
-          <div className="w-10 h-1 bg-[#223029] rounded-full" />
+          <div className="w-10 h-1 bg-[#262F57] rounded-full" />
         </div>
 
         {/* Sheet Header */}
-        <div className="flex items-center justify-between px-5 py-3 border-b border-[#223029]">
+        <div className="flex items-center justify-between px-5 py-3 border-b border-[#262F57]">
           <div>
-            <h2 id="invest-sheet-title" className="typography-title text-[#F1F5F3]">
+            <h2 id="invest-sheet-title" className="typography-title text-[#F4F6FF]">
               Update investments
             </h2>
-            <p className="typography-caption text-[#9AA9A2] mt-0.5">
+            <p className="typography-caption text-[#A3ACD1] mt-0.5">
               Current values and profit or loss
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="w-10 h-10 rounded-[14px] bg-[#17231E] border border-[#223029] flex items-center justify-center text-[#9AA9A2] hover:text-[#F1F5F3] active:scale-[0.98]"
+            className="w-10 h-10 rounded-[14px] bg-[#1A2142] border border-[#262F57] flex items-center justify-center text-[#A3ACD1] hover:text-[#F4F6FF] active:scale-[0.98]"
             aria-label="Close"
           >
             <X className="w-5 h-5" strokeWidth={1.75} />
@@ -191,14 +189,14 @@ export const InvestmentLoggerSheet: React.FC<InvestmentLoggerSheetProps> = ({
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
           {/* Date Selector */}
           <div>
-            <label className="typography-label text-[#9AA9A2] block mb-1.5">
+            <label className="typography-label text-[#A3ACD1] block mb-1.5">
               Date
             </label>
             <input
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="w-full h-[56px] px-4 rounded-[14px] bg-[#17231E] border border-[#223029] text-[16px] text-[#F1F5F3] focus:outline-none focus:border-[#34D399] focus:ring-2 focus:ring-[#34D399]/20"
+              className="w-full h-[56px] px-4 rounded-[14px] bg-[#1A2142] border border-[#262F57] text-[16px] text-[#F4F6FF] focus:outline-none focus:border-[#8E9BFF] focus:ring-2 focus:ring-[#8E9BFF]/20"
               required
             />
           </div>
@@ -221,28 +219,28 @@ export const InvestmentLoggerSheet: React.FC<InvestmentLoggerSheetProps> = ({
               return (
                 <div
                   key={inv.name}
-                  className="bg-[#17231E]/60 border border-[#223029] rounded-[20px] p-3.5 space-y-3"
+                  className="bg-[#1A2142]/60 border border-[#262F57] rounded-[20px] p-3.5 space-y-3"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
                       <MonogramAvatar name={inv.name} category="investment" size="sm" />
                       <div>
-                        <div className="typography-body font-semibold text-[#F1F5F3]">
+                        <div className="typography-body font-semibold text-[#F4F6FF]">
                           {inv.name}
                         </div>
-                        <div className="typography-caption text-[#9AA9A2]">
+                        <div className="typography-caption text-[#A3ACD1]">
                           {inv.platform || inv.type || 'Asset'}
                         </div>
                       </div>
                     </div>
 
                     <div className="text-right">
-                      <div className="typography-amount-l text-[#F1F5F3]">
+                      <div className="typography-amount-l text-[#F4F6FF]">
                         {formatMoney(itemTotal)}
                       </div>
                       <div
                         className={`typography-caption font-medium ${
-                          earnNum >= 0 ? 'text-[#10B981]' : 'text-[#F87171]'
+                          earnNum >= 0 ? 'text-[#34D3A0]' : 'text-[#FF6E8A]'
                         }`}
                       >
                         {formatPercent(itemReturn)}
@@ -253,11 +251,11 @@ export const InvestmentLoggerSheet: React.FC<InvestmentLoggerSheetProps> = ({
                   {/* Two 56px inputs */}
                   <div className="grid grid-cols-2 gap-2.5">
                     <div>
-                      <label className="typography-caption text-[#9AA9A2] block mb-1">
+                      <label className="typography-caption text-[#A3ACD1] block mb-1">
                         Invested amount
                       </label>
                       <div className="relative flex items-center">
-                        <span className="absolute left-3 text-[#9AA9A2] text-sm pointer-events-none">
+                        <span className="absolute left-3 text-[#A3ACD1] text-sm pointer-events-none">
                           ₹
                         </span>
                         <input
@@ -266,14 +264,14 @@ export const InvestmentLoggerSheet: React.FC<InvestmentLoggerSheetProps> = ({
                           placeholder="0"
                           value={state.invested}
                           onChange={(e) => handleFieldChange(inv.name, 'invested', e.target.value)}
-                          className="w-full h-[56px] pl-7 pr-3 rounded-[14px] bg-[#111A16] border border-[#223029] text-[16px] text-[#F1F5F3] focus:outline-none focus:border-[#34D399] focus:ring-2 focus:ring-[#34D399]/20 transition-all font-variant-numeric: tabular-nums"
+                          className="w-full h-[56px] pl-7 pr-3 rounded-[14px] bg-[#121830] border border-[#262F57] text-[16px] text-[#F4F6FF] focus:outline-none focus:border-[#8E9BFF] focus:ring-2 focus:ring-[#8E9BFF]/20 transition-all font-variant-numeric: tabular-nums"
                         />
                       </div>
                     </div>
 
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <label className="typography-caption text-[#9AA9A2] block">
+                        <label className="typography-caption text-[#A3ACD1] block">
                           Profit / Loss
                         </label>
                         {/* Sign toggle button */}
@@ -282,8 +280,8 @@ export const InvestmentLoggerSheet: React.FC<InvestmentLoggerSheetProps> = ({
                           onClick={() => toggleSign(inv.name)}
                           className={`text-[11px] font-semibold px-1.5 py-0.5 rounded border ${
                             state.isNegativeEarnings
-                              ? 'bg-[#F87171]/15 text-[#F87171] border-[#F87171]/30'
-                              : 'bg-[#10B981]/15 text-[#10B981] border-[#10B981]/30'
+                              ? 'bg-[#FF6E8A]/15 text-[#FF6E8A] border-[#FF6E8A]/30'
+                              : 'bg-[#34D3A0]/15 text-[#34D3A0] border-[#34D3A0]/30'
                           }`}
                         >
                           {state.isNegativeEarnings ? 'Loss (−)' : 'Profit (+)'}
@@ -293,7 +291,7 @@ export const InvestmentLoggerSheet: React.FC<InvestmentLoggerSheetProps> = ({
                       <div className="relative flex items-center">
                         <span
                           className={`absolute left-3 text-sm pointer-events-none font-semibold ${
-                            state.isNegativeEarnings ? 'text-[#F87171]' : 'text-[#10B981]'
+                            state.isNegativeEarnings ? 'text-[#FF6E8A]' : 'text-[#34D3A0]'
                           }`}
                         >
                           {state.isNegativeEarnings ? MINUS_SIGN + '₹' : PLUS_SIGN + '₹'}
@@ -304,8 +302,8 @@ export const InvestmentLoggerSheet: React.FC<InvestmentLoggerSheetProps> = ({
                           placeholder="0"
                           value={state.earnings}
                           onChange={(e) => handleFieldChange(inv.name, 'earnings', e.target.value)}
-                          className={`w-full h-[56px] pl-9 pr-3 rounded-[14px] bg-[#111A16] border border-[#223029] text-[16px] focus:outline-none focus:border-[#34D399] focus:ring-2 focus:ring-[#34D399]/20 transition-all font-variant-numeric: tabular-nums ${
-                            state.isNegativeEarnings ? 'text-[#F87171]' : 'text-[#10B981]'
+                          className={`w-full h-[56px] pl-9 pr-3 rounded-[14px] bg-[#121830] border border-[#262F57] text-[16px] focus:outline-none focus:border-[#8E9BFF] focus:ring-2 focus:ring-[#8E9BFF]/20 transition-all font-variant-numeric: tabular-nums ${
+                            state.isNegativeEarnings ? 'text-[#FF6E8A]' : 'text-[#34D3A0]'
                           }`}
                         />
                       </div>
@@ -318,12 +316,12 @@ export const InvestmentLoggerSheet: React.FC<InvestmentLoggerSheetProps> = ({
         </form>
 
         {/* Sticky Footer */}
-        <div className="p-4 border-t border-[#223029] bg-[#111A16] safe-bottom space-y-3">
+        <div className="p-4 border-t border-[#262F57] bg-[#121830] safe-bottom space-y-3">
           <div className="flex items-center justify-between text-xs px-1">
-            <span className="text-[#9AA9A2]">
+            <span className="text-[#A3ACD1]">
               Total portfolio:
             </span>
-            <span className="font-semibold text-[#F1F5F3]">
+            <span className="font-semibold text-[#F4F6FF]">
               {formatMoney(newTotalValue)} ({formatPercent(overallReturn)})
             </span>
           </div>
@@ -332,10 +330,10 @@ export const InvestmentLoggerSheet: React.FC<InvestmentLoggerSheetProps> = ({
             type="button"
             onClick={handleSubmit}
             disabled={isSubmitting}
-            className="w-full h-[52px] rounded-[14px] bg-[#10B981] hover:bg-[#34D399] active:scale-[0.98] active:bg-[#047857] text-[#0A0F0D] font-semibold text-[16px] flex items-center justify-center gap-2 shadow-sm transition-all disabled:opacity-40"
+            className="w-full h-[52px] rounded-[14px] bg-[#3D4AD6] hover:bg-[#5B6CFF] active:scale-[0.98] active:bg-[#303BB8] text-white font-semibold text-[16px] flex items-center justify-center gap-2 shadow-sm transition-all disabled:opacity-40"
           >
             {isSubmitting ? (
-              <span className="w-5 h-5 border-2 border-[#0A0F0D] border-t-transparent rounded-full animate-spin" />
+              <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
             ) : (
               <span>Save</span>
             )}

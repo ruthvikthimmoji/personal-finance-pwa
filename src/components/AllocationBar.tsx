@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { formatMoney } from '../utils/format';
 
 interface AllocationBarProps {
   bankTotal: number;
@@ -12,7 +11,6 @@ export const AllocationBar: React.FC<AllocationBarProps> = ({
   bankTotal,
   cashTotal,
   investmentsTotal,
-  isPrivate,
 }) => {
   const [highlightedCategory, setHighlightedCategory] = useState<
     'bank' | 'cash' | 'investment' | null
@@ -29,12 +27,12 @@ export const AllocationBar: React.FC<AllocationBarProps> = ({
 
   return (
     <div className="space-y-2.5">
-      {/* 8px tall segmented bar with 2px gaps */}
-      <div className="h-2 w-full bg-[#17231E] rounded-full overflow-hidden flex gap-[2px]">
+      {/* 8px tall segmented bar with 2px gaps (Page 9) */}
+      <div className="h-2 w-full bg-[#1A2142] rounded-full overflow-hidden flex gap-[2px]">
         {bankPct > 0 && (
           <div
             style={{ width: `${bankPct}%` }}
-            className={`h-full bg-[#10B981] rounded-l-full transition-all duration-300 ${
+            className={`h-full bg-[#5B6CFF] rounded-l-full transition-all duration-300 ${
               highlightedCategory && highlightedCategory !== 'bank'
                 ? 'opacity-30'
                 : 'opacity-100'
@@ -45,7 +43,7 @@ export const AllocationBar: React.FC<AllocationBarProps> = ({
         {cashPct > 0 && (
           <div
             style={{ width: `${cashPct}%` }}
-            className={`h-full bg-[#FBBF24] transition-all duration-300 ${
+            className={`h-full bg-[#F5C76B] transition-all duration-300 ${
               highlightedCategory && highlightedCategory !== 'cash'
                 ? 'opacity-30'
                 : 'opacity-100'
@@ -56,7 +54,7 @@ export const AllocationBar: React.FC<AllocationBarProps> = ({
         {invPct > 0 && (
           <div
             style={{ width: `${invPct}%` }}
-            className={`h-full bg-[#60A5FA] rounded-r-full transition-all duration-300 ${
+            className={`h-full bg-[#22D3EE] rounded-r-full transition-all duration-300 ${
               highlightedCategory && highlightedCategory !== 'investment'
                 ? 'opacity-30'
                 : 'opacity-100'
@@ -67,7 +65,7 @@ export const AllocationBar: React.FC<AllocationBarProps> = ({
       </div>
 
       {/* Legend with interactive highlight on tap */}
-      <div className="flex items-center justify-between text-xs text-[#9AA9A2] pt-0.5">
+      <div className="flex items-center justify-between text-xs text-[#A3ACD1] pt-0.5">
         <button
           type="button"
           onClick={() => toggleHighlight('bank')}
@@ -75,7 +73,7 @@ export const AllocationBar: React.FC<AllocationBarProps> = ({
             highlightedCategory && highlightedCategory !== 'bank' ? 'opacity-40' : 'opacity-100'
           }`}
         >
-          <span className="w-2 h-2 rounded-full bg-[#10B981]" />
+          <span className="w-2 h-2 rounded-full bg-[#5B6CFF]" />
           <span>Bank ({bankPct.toFixed(0)}%)</span>
         </button>
 
@@ -86,7 +84,7 @@ export const AllocationBar: React.FC<AllocationBarProps> = ({
             highlightedCategory && highlightedCategory !== 'cash' ? 'opacity-40' : 'opacity-100'
           }`}
         >
-          <span className="w-2 h-2 rounded-full bg-[#FBBF24]" />
+          <span className="w-2 h-2 rounded-full bg-[#F5C76B]" />
           <span>Cash ({cashPct.toFixed(0)}%)</span>
         </button>
 
@@ -97,7 +95,7 @@ export const AllocationBar: React.FC<AllocationBarProps> = ({
             highlightedCategory && highlightedCategory !== 'investment' ? 'opacity-40' : 'opacity-100'
           }`}
         >
-          <span className="w-2 h-2 rounded-full bg-[#60A5FA]" />
+          <span className="w-2 h-2 rounded-full bg-[#22D3EE]" />
           <span>Invested ({invPct.toFixed(0)}%)</span>
         </button>
       </div>

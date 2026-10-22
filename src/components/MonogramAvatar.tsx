@@ -10,7 +10,6 @@ export const getMonogram = (name: string): string => {
   const clean = name.trim();
   if (!clean) return '••';
 
-  // Specific custom mappings
   const lower = clean.toLowerCase();
   if (lower.includes('cash')) return 'CH';
   if (lower.includes('hdfc')) return 'HD';
@@ -38,15 +37,15 @@ export const MonogramAvatar: React.FC<MonogramAvatarProps> = ({
 }) => {
   const monogram = getMonogram(name);
 
-  // Asset allocation colors from Page 4:
-  // Bank accounts: #10B981 (emerald)
-  // Investments: #60A5FA (blue)
-  // Cash in hand: #FBBF24 (amber)
-  let bgStyle = 'bg-[#10B981]/15 text-[#10B981] border-[#10B981]/30';
+  // New Asset allocation colors from Page 4:
+  // Bank accounts: #5B6CFF (indigo)
+  // Investments: #22D3EE (cyan)
+  // Cash in hand: #F5C76B (gold)
+  let bgStyle = 'bg-[#5B6CFF]/15 text-[#5B6CFF] border-[#5B6CFF]/30';
   if (category === 'cash') {
-    bgStyle = 'bg-[#FBBF24]/15 text-[#FBBF24] border-[#FBBF24]/30';
+    bgStyle = 'bg-[#F5C76B]/15 text-[#F5C76B] border-[#F5C76B]/30';
   } else if (category === 'investment') {
-    bgStyle = 'bg-[#60A5FA]/15 text-[#60A5FA] border-[#60A5FA]/30';
+    bgStyle = 'bg-[#22D3EE]/15 text-[#22D3EE] border-[#22D3EE]/30';
   }
 
   const sizeClass =

@@ -17,30 +17,30 @@ export const AccountsView: React.FC<AccountsViewProps> = ({ data, isPrivate }) =
     <div className="space-y-4 pb-28 px-4 max-w-lg mx-auto">
       {/* Title */}
       <div className="px-1 pt-1">
-        <h2 className="typography-title text-[#F1F5F3]">Accounts & Assets</h2>
-        <p className="typography-caption text-[#9AA9A2] mt-0.5">
+        <h2 className="typography-title text-[#F4F6FF]">Accounts & Assets</h2>
+        <p className="typography-caption text-[#A3ACD1] mt-0.5">
           Breakdown of your banks, cash and investments
         </p>
       </div>
 
       {/* Summary Cards */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="bg-[#111A16] border border-[#223029] rounded-[20px] p-4 space-y-1">
-          <span className="typography-caption text-[#9AA9A2]">Total Bank & Cash</span>
-          <div className="typography-amount-l text-[#F1F5F3]">
+        <div className="bg-[#121830] border border-[#262F57] rounded-[20px] p-4 space-y-1">
+          <span className="typography-caption text-[#A3ACD1]">Total Bank & Cash</span>
+          <div className="typography-amount-l text-[#F4F6FF]">
             {formatMoney(totalLiquid, { isPrivate })}
           </div>
-          <div className="typography-caption text-[#10B981] font-medium pt-0.5">
+          <div className="typography-caption text-[#5B6CFF] font-medium pt-0.5">
             {accountCards.length} accounts
           </div>
         </div>
 
-        <div className="bg-[#111A16] border border-[#223029] rounded-[20px] p-4 space-y-1">
-          <span className="typography-caption text-[#9AA9A2]">Total Investments</span>
-          <div className="typography-amount-l text-[#F1F5F3]">
+        <div className="bg-[#121830] border border-[#262F57] rounded-[20px] p-4 space-y-1">
+          <span className="typography-caption text-[#A3ACD1]">Total Investments</span>
+          <div className="typography-amount-l text-[#F4F6FF]">
             {formatMoney(summary.currentInvestmentValue, { isPrivate })}
           </div>
-          <div className="typography-caption text-[#60A5FA] font-medium pt-0.5">
+          <div className="typography-caption text-[#22D3EE] font-medium pt-0.5">
             {formatPercent(summary.overallReturnPct, isPrivate)} returns
           </div>
         </div>
@@ -49,10 +49,10 @@ export const AccountsView: React.FC<AccountsViewProps> = ({ data, isPrivate }) =
       {/* Bank & Cash Accounts */}
       <div className="space-y-2.5">
         <div className="flex items-center justify-between px-1">
-          <h3 className="typography-label uppercase tracking-wider text-[#9AA9A2]">
+          <h3 className="typography-label uppercase tracking-wider text-[#A3ACD1]">
             Bank & Cash Accounts
           </h3>
-          <span className="typography-caption text-[#9AA9A2]">
+          <span className="typography-caption text-[#A3ACD1]">
             {formatMoney(totalLiquid, { isPrivate })}
           </span>
         </div>
@@ -65,7 +65,7 @@ export const AccountsView: React.FC<AccountsViewProps> = ({ data, isPrivate }) =
             return (
               <div
                 key={account.name}
-                className="bg-[#111A16] border border-[#223029] rounded-[20px] p-4 space-y-3"
+                className="bg-[#121830] border border-[#262F57] rounded-[20px] p-4 space-y-3"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3 min-w-0">
@@ -74,17 +74,17 @@ export const AccountsView: React.FC<AccountsViewProps> = ({ data, isPrivate }) =
                       category={isCash ? 'cash' : 'bank'}
                     />
                     <div className="min-w-0">
-                      <div className="typography-body font-semibold text-[#F1F5F3] truncate max-w-[170px]">
+                      <div className="typography-body font-semibold text-[#F4F6FF] truncate max-w-[170px]">
                         {account.name}
                       </div>
-                      <div className="typography-caption text-[#9AA9A2]">
+                      <div className="typography-caption text-[#A3ACD1]">
                         {isCash ? 'Physical Cash' : meta?.bank || meta?.type || 'Savings'}
                       </div>
                     </div>
                   </div>
 
                   <div className="text-right shrink-0">
-                    <div className="typography-amount-l text-[#F1F5F3]">
+                    <div className="typography-amount-l text-[#F4F6FF]">
                       {formatMoney(account.latestBalance, { isPrivate })}
                     </div>
                     <div className="mt-0.5">
@@ -99,14 +99,14 @@ export const AccountsView: React.FC<AccountsViewProps> = ({ data, isPrivate }) =
 
                 {/* Sub details */}
                 {(account.totalAdded > 0 || account.totalDeducted > 0) && (
-                  <div className="pt-2 border-t border-[#223029] flex items-center justify-between typography-caption text-[#9AA9A2]">
+                  <div className="pt-2 border-t border-[#262F57] flex items-center justify-between typography-caption text-[#A3ACD1]">
                     <span>Total activity:</span>
                     <div className="flex items-center gap-2">
-                      <span className="text-[#10B981]">
+                      <span className="text-[#34D3A0]">
                         +{formatMoney(account.totalAdded, { isPrivate })}
                       </span>
                       <span>/</span>
-                      <span className="text-[#F87171]">
+                      <span className="text-[#FF6E8A]">
                         −{formatMoney(account.totalDeducted, { isPrivate })}
                       </span>
                     </div>
@@ -121,10 +121,10 @@ export const AccountsView: React.FC<AccountsViewProps> = ({ data, isPrivate }) =
       {/* Investments Portfolio */}
       <div className="space-y-2.5">
         <div className="flex items-center justify-between px-1">
-          <h3 className="typography-label uppercase tracking-wider text-[#9AA9A2]">
+          <h3 className="typography-label uppercase tracking-wider text-[#A3ACD1]">
             Investments Portfolio
           </h3>
-          <span className="typography-caption text-[#9AA9A2]">
+          <span className="typography-caption text-[#A3ACD1]">
             {formatMoney(summary.currentInvestmentValue, { isPrivate })}
           </span>
         </div>
@@ -136,16 +136,16 @@ export const AccountsView: React.FC<AccountsViewProps> = ({ data, isPrivate }) =
             return (
               <div
                 key={inv.name}
-                className="bg-[#111A16] border border-[#223029] rounded-[20px] p-4 space-y-3"
+                className="bg-[#121830] border border-[#262F57] rounded-[20px] p-4 space-y-3"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3 min-w-0">
                     <MonogramAvatar name={inv.name} category="investment" />
                     <div className="min-w-0">
-                      <div className="typography-body font-semibold text-[#F1F5F3] truncate max-w-[170px]">
+                      <div className="typography-body font-semibold text-[#F4F6FF] truncate max-w-[170px]">
                         {inv.name}
                       </div>
-                      <div className="typography-caption text-[#9AA9A2]">
+                      <div className="typography-caption text-[#A3ACD1]">
                         {inv.platform ? `${inv.platform} · ` : ''}
                         {inv.type || 'Investment'}
                       </div>
@@ -153,12 +153,12 @@ export const AccountsView: React.FC<AccountsViewProps> = ({ data, isPrivate }) =
                   </div>
 
                   <div className="text-right shrink-0">
-                    <div className="typography-amount-l text-[#F1F5F3]">
+                    <div className="typography-amount-l text-[#F4F6FF]">
                       {formatMoney(inv.currentValue, { isPrivate })}
                     </div>
                     <div
                       className={`typography-caption font-medium mt-0.5 ${
-                        isProfit ? 'text-[#10B981]' : 'text-[#F87171]'
+                        isProfit ? 'text-[#34D3A0]' : 'text-[#FF6E8A]'
                       }`}
                     >
                       {formatPercent(inv.returnPct, isPrivate)}
@@ -166,10 +166,10 @@ export const AccountsView: React.FC<AccountsViewProps> = ({ data, isPrivate }) =
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-[#223029] grid grid-cols-2 typography-caption text-[#9AA9A2]">
+                <div className="pt-2 border-t border-[#262F57] grid grid-cols-2 typography-caption text-[#A3ACD1]">
                   <div>
                     <span>Invested: </span>
-                    <span className="text-[#F1F5F3] font-medium">
+                    <span className="text-[#F4F6FF] font-medium">
                       {formatMoney(inv.latestInvested, { isPrivate })}
                     </span>
                   </div>
@@ -177,7 +177,7 @@ export const AccountsView: React.FC<AccountsViewProps> = ({ data, isPrivate }) =
                     <span>Profit/loss: </span>
                     <span
                       className={`font-medium ${
-                        isProfit ? 'text-[#10B981]' : 'text-[#F87171]'
+                        isProfit ? 'text-[#34D3A0]' : 'text-[#FF6E8A]'
                       }`}
                     >
                       {formatMoney(inv.latestEarnings, { isPrivate, isChange: false })}

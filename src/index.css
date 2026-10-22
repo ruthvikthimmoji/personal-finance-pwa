@@ -2,26 +2,27 @@
 
 @layer base {
   :root {
-    --bg-base: #0A0F0D;
-    --bg-surface: #111A16;
-    --bg-elevated: #17231E;
-    --border-subtle: #223029;
-    --brand-primary: #10B981;
-    --brand-glow: #34D399;
-    --brand-deep: #047857;
+    --bg-base: #0B0F1E;
+    --bg-surface: #121830;
+    --bg-elevated: #1A2142;
+    --border-subtle: #262F57;
+    --brand-primary: #5B6CFF;
+    --brand-deep: #3D4AD6;
+    --brand-glow: #8E9BFF;
+    --accent-gold: #F5C76B;
 
-    --text-primary: #F1F5F3;
-    --text-secondary: #9AA9A2;
-    --text-tertiary: #64736C;
+    --text-primary: #F4F6FF;
+    --text-secondary: #A3ACD1;
+    --text-tertiary: #6B7499;
 
-    --positive: #10B981;
-    --negative: #F87171;
-    --warning: #FBBF24;
-    --info: #60A5FA;
+    --positive: #34D3A0;
+    --negative: #FF6E8A;
+    --warning: #FFB84D;
+    --info: #5BC0FF;
 
-    --color-bank: #10B981;
-    --color-investments: #60A5FA;
-    --color-cash: #FBBF24;
+    --color-bank: #5B6CFF;
+    --color-investments: #22D3EE;
+    --color-cash: #F5C76B;
   }
 
   body {
@@ -104,6 +105,6 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(34, 48, 41, 0.8);
+  background: rgba(38, 47, 87, 0.8);
   border-radius: 9999px;
 }

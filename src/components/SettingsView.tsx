@@ -4,24 +4,26 @@ import {
   getSavedScriptUrl,
   saveScriptUrl,
   testConnection,
+  cacheFinanceData,
+  INITIAL_FINANCE_DATA,
 } from '../services/api';
 import {
-  Settings,
-  Link2,
-  CheckCircle2,
-  AlertCircle,
+  Check,
   Copy,
   ExternalLink,
-  Smartphone,
-  Sparkles,
+  Eye,
+  EyeOff,
+  ChevronDown,
+  ChevronUp,
+  Trash2,
   ShieldCheck,
   FileSpreadsheet,
-  QrCode,
-  Globe,
 } from 'lucide-react';
 
 interface SettingsViewProps {
   onRefreshData: () => void;
+  isPrivate: boolean;
+  onTogglePrivacy: () => void;
 }
 
 const APPS_SCRIPT_SOURCE = `/**
@@ -249,261 +251,347 @@ function parseInputDate(dateStr) {
   return new Date(dateStr);
 }`;
 
-export const SettingsView: React.FC<SettingsViewProps> = ({ onRefreshData }) => {
+export const SettingsView: React.FC<SettingsViewProps> = ({
+  onRefreshData,
+  isPrivate,
+  onTogglePrivacy,
+}) => {
   const [url, setUrl] = useState(getSavedScriptUrl());
+  const [isUrlRevealed, setIsUrlRevealed] = useState(false);
   const [isTesting, setIsTesting] = useState(false);
-  const [testResult, setTestResult] = useState<{ success: boolean; message: string } | null>(null);
-  const [hasCopiedCode, setHasCopiedCode] = useState(false);
+  const [syncStatus, setSyncStatus] = useState<'idle' | 'connected' | 'error'>('idle');
+  const [statusMessage, setStatusMessage] = useState('');
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
+  const [hasCopied, setHasCopied] = useState(false);
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
 
-  // Compute mobile access URL (either current browser URL or local WiFi URL)
   const currentOrigin = typeof window !== 'undefined' ? window.location.origin : 'http://192.168.1.4:5173';
-  const mobileAccessUrl = currentOrigin.includes('localhost')
-    ? 'http://192.168.1.4:5173'
-    : currentOrigin;
+  const phoneUrl = currentOrigin.includes('localhost') ? 'http://192.168.1.4:5173' : currentOrigin;
 
-  const handleSaveUrl = () => {
+  // Masked URL presentation (Page 11: first 20 characters, then ••••)
+  const getMaskedUrl = (raw: string) => {
+    if (!raw) return '';
+    if (raw.length <= 20) return raw;
+    return raw.slice(0, 20) + '••••••••';
+  };
+
+  const handleSave = () => {
     saveScriptUrl(url);
-    setTestResult({ success: true, message: 'URL saved to app settings!' });
+    setStatusMessage('URL saved');
+    setSyncStatus('idle');
     onRefreshData();
   };
 
   const handleTestConnection = async () => {
     if (!url.trim()) {
-      setTestResult({ success: false, message: 'Please enter a Web App URL first.' });
+      setStatusMessage('Enter a Web App URL first');
+      setSyncStatus('error');
       return;
     }
+
     setIsTesting(true);
-    setTestResult(null);
+    setStatusMessage('');
 
     const res = await testConnection(url.trim());
-    setTestResult(res);
     setIsTesting(false);
 
     if (res.success) {
+      setSyncStatus('connected');
+      setStatusMessage('Connected. Your sheet is ready.');
       saveScriptUrl(url.trim());
       onRefreshData();
+    } else {
+      setSyncStatus('error');
+      setStatusMessage(res.message);
     }
   };
 
-  const handleCopyCode = async () => {
+  const handleCopyScript = async () => {
     try {
       await navigator.clipboard.writeText(APPS_SCRIPT_SOURCE);
-      setHasCopiedCode(true);
-      setTimeout(() => setHasCopiedCode(false), 2500);
+      setHasCopied(true);
+      setTimeout(() => setHasCopied(false), 2000);
     } catch {
       // fallback
     }
   };
 
+  const handleClearData = () => {
+    cacheFinanceData(INITIAL_FINANCE_DATA);
+    setShowClearConfirm(false);
+    onRefreshData();
+  };
+
   return (
-    <div className="space-y-5 pb-24 px-4 pt-1 max-w-lg mx-auto">
+    <div className="space-y-4 pb-28 px-4 max-w-lg mx-auto">
       {/* Title */}
-      <div>
-        <h2 className="text-lg font-bold text-white tracking-tight">Settings & Sync</h2>
-        <p className="text-xs text-slate-400">Connect directly to your Google Spreadsheet</p>
+      <div className="px-1 pt-1">
+        <h2 className="typography-title text-[#F1F5F3]">Settings</h2>
+        <p className="typography-caption text-[#9AA9A2] mt-0.5">
+          Sync, privacy and configuration
+        </p>
       </div>
 
-      {/* Spreadsheet Quick Link Card */}
+      {/* Spreadsheet Quick Link */}
       <a
         href="https://docs.google.com/spreadsheets/d/1al3dZQcq-FOASXxkfYKt_-gvbolvGMqLjTS32EWvXjQ/edit?gid=11885255#gid=11885255"
         target="_blank"
         rel="noreferrer"
-        className="flex items-center justify-between p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-emerald-500/50 transition-all group"
+        className="bg-[#111A16] border border-[#223029] rounded-[20px] p-4 flex items-center justify-between hover:bg-[#17231E]/40 active:bg-[#17231E] transition-all"
       >
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center text-emerald-400">
-            <FileSpreadsheet className="w-5 h-5" />
+          <div className="w-9 h-9 rounded-xl bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center text-[#10B981]">
+            <FileSpreadsheet className="w-5 h-5" strokeWidth={1.75} />
           </div>
           <div>
-            <div className="text-sm font-semibold text-white group-hover:text-emerald-400 transition-colors">
-              Open Google Spreadsheet
+            <div className="typography-body font-semibold text-[#F1F5F3]">
+              Open Google Sheet
             </div>
-            <div className="text-xs text-slate-400">Personal Finance Tracker</div>
+            <div className="typography-caption text-[#9AA9A2]">
+              Personal Finance Tracker
+            </div>
           </div>
         </div>
-        <ExternalLink className="w-4 h-4 text-slate-500 group-hover:text-emerald-400 transition-colors" />
+        <ExternalLink className="w-5 h-5 text-[#9AA9A2]" strokeWidth={1.75} />
       </a>
 
-      {/* Open on Phone via QR Code Card */}
-      <div className="p-4 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900/90 to-slate-950 border border-slate-800 shadow-xl space-y-3">
-        <div className="flex items-center gap-2">
-          <QrCode className="w-4 h-4 text-emerald-400" />
-          <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-            Open on Your Phone
+      {/* Sync Card */}
+      <div className="bg-[#111A16] border border-[#223029] rounded-[20px] p-4 space-y-3">
+        <div className="flex items-center justify-between">
+          <h3 className="typography-label uppercase tracking-wider text-[#9AA9A2]">
+            Google Sheets sync
           </h3>
+          {syncStatus === 'connected' && (
+            <span className="inline-flex items-center gap-1 text-xs text-[#10B981] font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+              Connected
+            </span>
+          )}
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center gap-4 bg-slate-950/70 p-3.5 rounded-xl border border-slate-800/80">
-          <div className="bg-white p-2 rounded-xl shadow-md shrink-0">
-            <QRCodeSVG
-              value={mobileAccessUrl}
-              size={130}
-              bgColor="#ffffff"
-              fgColor="#090d16"
-              level="M"
-            />
-          </div>
-
-          <div className="space-y-1.5 text-center sm:text-left">
-            <div className="text-xs font-semibold text-white">Scan with Phone Camera</div>
-            <p className="text-[11px] text-slate-400 leading-relaxed">
-              Scan this code with your iPhone or Android camera to immediately open the app on your phone.
-            </p>
-            <div className="pt-1">
-              <span className="text-[11px] font-mono text-emerald-400 bg-emerald-950/40 px-2 py-1 rounded-md border border-emerald-800/40 inline-block break-all">
-                {mobileAccessUrl}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Connection Card */}
-      <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/90 space-y-3">
-        <div className="flex items-center gap-2">
-          <Link2 className="w-4 h-4 text-emerald-400" />
-          <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-            Google Apps Script Web App URL
-          </h3>
-        </div>
-
-        <p className="text-xs text-slate-400 leading-relaxed">
-          Paste the Web App URL generated from Extensions &gt; Apps Script in your spreadsheet to sync data in real time.
-        </p>
-
+        {/* Masked URL Input (Section 10) */}
         <div className="space-y-2">
-          <input
-            type="url"
-            placeholder="https://script.google.com/macros/s/.../exec"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            className="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-2 text-xs font-mono text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 transition-colors"
-          />
-
-          <div className="flex items-center gap-2 pt-1">
+          <div className="relative flex items-center">
+            <input
+              type={isUrlRevealed ? 'text' : 'password'}
+              placeholder="https://script.google.com/macros/s/.../exec"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              className="w-full h-[56px] pl-4 pr-12 rounded-[14px] bg-[#17231E] border border-[#223029] text-[16px] text-[#F1F5F3] placeholder-[#64736C] focus:outline-none focus:border-[#34D399] focus:ring-2 focus:ring-[#34D399]/20 font-mono text-sm"
+            />
             <button
+              type="button"
+              onClick={() => setIsUrlRevealed(!isUrlRevealed)}
+              className="absolute right-3 p-1.5 text-[#9AA9A2] hover:text-[#F1F5F3]"
+              title={isUrlRevealed ? 'Hide URL' : 'Reveal URL'}
+            >
+              {isUrlRevealed ? (
+                <EyeOff className="w-4 h-4" strokeWidth={1.75} />
+              ) : (
+                <Eye className="w-4 h-4" strokeWidth={1.75} />
+              )}
+            </button>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2 pt-1">
+            <button
+              type="button"
               onClick={handleTestConnection}
               disabled={isTesting}
-              className="flex-1 py-2.5 px-3 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-bold hover:bg-emerald-500/30 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-1.5"
+              className="h-[44px] rounded-[14px] bg-[#17231E] hover:bg-[#223029] active:scale-[0.98] border border-[#223029] text-[#F1F5F3] font-semibold text-xs flex items-center justify-center gap-2 transition-all disabled:opacity-40"
             >
               {isTesting ? (
-                <>
-                  <span className="w-3.5 h-3.5 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
-                  Testing...
-                </>
+                <span className="w-4 h-4 border-2 border-[#F1F5F3] border-t-transparent rounded-full animate-spin" />
               ) : (
-                <>
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  Test Connection
-                </>
+                <span>Test connection</span>
               )}
             </button>
 
             <button
-              onClick={handleSaveUrl}
-              className="py-2.5 px-4 rounded-xl bg-slate-800 text-slate-200 text-xs font-semibold hover:bg-slate-700 active:scale-[0.98] transition-all"
+              type="button"
+              onClick={handleSave}
+              className="h-[44px] rounded-[14px] bg-[#10B981] hover:bg-[#34D399] active:scale-[0.98] active:bg-[#047857] text-[#0A0F0D] font-semibold text-xs flex items-center justify-center transition-all"
             >
               Save
             </button>
           </div>
-        </div>
 
-        {testResult && (
-          <div
-            className={`p-3 rounded-xl text-xs flex items-start gap-2 ${
-              testResult.success
-                ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-300'
-                : 'bg-rose-500/10 border border-rose-500/30 text-rose-300'
-            }`}
-          >
-            {testResult.success ? (
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+          {statusMessage && (
+            <p
+              className={`typography-caption pt-1 ${
+                syncStatus === 'connected'
+                  ? 'text-[#10B981]'
+                  : syncStatus === 'error'
+                  ? 'text-[#F87171]'
+                  : 'text-[#9AA9A2]'
+              }`}
+            >
+              {statusMessage}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* 1-Minute Setup Guide (Collapsible) */}
+      <div className="bg-[#111A16] border border-[#223029] rounded-[20px] overflow-hidden">
+        <button
+          type="button"
+          onClick={() => setIsGuideOpen(!isGuideOpen)}
+          className="w-full p-4 flex items-center justify-between text-left hover:bg-[#17231E]/40 transition-colors"
+        >
+          <div>
+            <div className="typography-body font-semibold text-[#F1F5F3]">
+              Setup guide
+            </div>
+            <div className="typography-caption text-[#9AA9A2]">
+              Connect your Google Sheet in 1 minute
+            </div>
+          </div>
+          <div className="text-[#9AA9A2]">
+            {isGuideOpen ? (
+              <ChevronUp className="w-5 h-5" strokeWidth={1.75} />
             ) : (
-              <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+              <ChevronDown className="w-5 h-5" strokeWidth={1.75} />
             )}
-            <span className="break-all">{testResult.message}</span>
+          </div>
+        </button>
+
+        {isGuideOpen && (
+          <div className="px-4 pb-4 pt-1 border-t border-[#223029] bg-[#17231E]/30 space-y-3">
+            <div className="flex justify-end pt-1">
+              <button
+                type="button"
+                onClick={handleCopyScript}
+                className="h-9 px-3 rounded-[10px] bg-[#10B981] text-[#0A0F0D] font-semibold text-xs inline-flex items-center gap-1.5 active:scale-95"
+              >
+                {hasCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                <span>{hasCopied ? 'Copied' : 'Copy script code'}</span>
+              </button>
+            </div>
+
+            <ol className="typography-caption text-[#9AA9A2] space-y-2 list-decimal list-inside leading-relaxed">
+              <li>In your Google Sheet, open <strong className="text-[#F1F5F3]">Extensions &gt; Apps Script</strong>.</li>
+              <li>Delete all existing code, paste the copied script, and click <strong className="text-[#F1F5F3]">Save</strong>.</li>
+              <li>Click <strong className="text-[#F1F5F3]">Deploy &gt; New deployment</strong>.</li>
+              <li>Select type <strong className="text-[#F1F5F3]">Web app</strong>.</li>
+              <li>Set Execute as: <strong className="text-[#F1F5F3]">Me</strong>, Who has access: <strong className="text-[#F1F5F3]">Anyone</strong>.</li>
+              <li>Click Deploy, approve permissions (click Advanced &gt; Go to project), and paste your Web App URL above.</li>
+            </ol>
           </div>
         )}
       </div>
 
-      {/* 60-Second Setup Guide */}
-      <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/90 space-y-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-amber-400" />
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-              1-Minute Setup Guide
-            </h3>
+      {/* Open on Phone QR Code */}
+      <div className="bg-[#111A16] border border-[#223029] rounded-[20px] p-4 space-y-3">
+        <h3 className="typography-label uppercase tracking-wider text-[#9AA9A2]">
+          Open on your phone
+        </h3>
+
+        <div className="flex items-center gap-4 bg-[#17231E] p-3 rounded-[14px] border border-[#223029]">
+          <div className="bg-white p-2 rounded-[10px] shrink-0">
+            <QRCodeSVG
+              value={phoneUrl}
+              size={100}
+              bgColor="#ffffff"
+              fgColor="#0A0F0D"
+              level="M"
+            />
+          </div>
+          <div className="space-y-1 typography-caption text-[#9AA9A2]">
+            <p className="font-semibold text-[#F1F5F3]">
+              Scan with your camera
+            </p>
+            <p>
+              Instantly opens this app on your phone. Then tap "Add to Home Screen".
+            </p>
+            <div className="pt-1 text-[11px] font-mono text-[#10B981] break-all">
+              {phoneUrl}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Privacy & Cache (Section 10) */}
+      <div className="bg-[#111A16] border border-[#223029] rounded-[20px] p-4 space-y-3">
+        <h3 className="typography-label uppercase tracking-wider text-[#9AA9A2]">
+          Privacy & Data
+        </h3>
+
+        <div className="flex items-center justify-between py-1">
+          <div>
+            <div className="typography-body text-[#F1F5F3]">Privacy mode</div>
+            <div className="typography-caption text-[#9AA9A2]">
+              Masks money amounts as ₹•••••• in public
+            </div>
           </div>
           <button
-            onClick={handleCopyCode}
-            className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-500 text-slate-950 font-bold text-xs hover:bg-emerald-400 transition-all active:scale-95 shadow-md shadow-emerald-500/20"
+            type="button"
+            onClick={onTogglePrivacy}
+            className={`w-12 h-7 rounded-full p-1 transition-colors ${
+              isPrivate ? 'bg-[#10B981]' : 'bg-[#223029]'
+            }`}
           >
-            {hasCopiedCode ? (
-              <>
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                Copied!
-              </>
-            ) : (
-              <>
-                <Copy className="w-3.5 h-3.5" />
-                Copy Script Code
-              </>
-            )}
+            <div
+              className={`w-5 h-5 rounded-full bg-white transition-transform ${
+                isPrivate ? 'translate-x-5' : 'translate-x-0'
+              }`}
+            />
           </button>
         </div>
 
-        <ol className="space-y-2 text-xs text-slate-300 list-decimal list-inside leading-relaxed">
-          <li>
-            Open your <span className="text-emerald-400 font-semibold">Google Sheet</span>.
-          </li>
-          <li>
-            In the top menu, click <span className="text-white font-semibold">Extensions &gt; Apps Script</span>.
-          </li>
-          <li>
-            Delete any sample code in <code className="text-emerald-300 bg-slate-800 px-1 py-0.5 rounded">Code.gs</code>, tap <strong>Copy Script Code</strong> above, and paste it.
-          </li>
-          <li>
-            Click the <span className="text-white font-semibold">Save icon</span> (Floppy / Cmd+S).
-          </li>
-          <li>
-            Click <span className="text-white font-semibold">Deploy &gt; New deployment</span>.
-          </li>
-          <li>
-            Click the gear icon &gt; Select <span className="text-emerald-300 font-semibold">Web app</span>.
-          </li>
-          <li>
-            Set <strong>Execute as:</strong> <code className="text-slate-200">Me</code> and <strong>Who has access:</strong> <code className="text-emerald-300 font-bold">Anyone</code>.
-          </li>
-          <li>
-            Click <strong>Deploy</strong>, grant Google permissions, then copy the <strong>Web App URL</strong> and paste it above!
-          </li>
-        </ol>
+        <div className="pt-2 border-t border-[#223029] flex items-center justify-between">
+          <div>
+            <div className="typography-body text-[#F1F5F3]">Local cache</div>
+            <div className="typography-caption text-[#9AA9A2]">
+              Reset cached entries to sheet defaults
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowClearConfirm(true)}
+            className="h-9 px-3 rounded-[10px] border border-[#F87171]/40 text-[#F87171] hover:bg-[#F87171]/10 text-xs font-medium active:scale-[0.98]"
+          >
+            Clear data
+          </button>
+        </div>
       </div>
 
-      {/* How to Install on Phone Card */}
-      <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/90 space-y-2.5">
-        <div className="flex items-center gap-2">
-          <Smartphone className="w-4 h-4 text-blue-400" />
-          <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-            Install on Your Phone
-          </h3>
+      {/* Clear Cache Confirmation Dialog */}
+      {showClearConfirm && (
+        <div className="p-4 rounded-[14px] bg-[#17231E] border border-[#F87171]/40 space-y-2.5">
+          <p className="typography-body text-[#F1F5F3]">
+            Clear local cache? Your Google Sheet data will not be affected.
+          </p>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={handleClearData}
+              className="h-9 px-4 rounded-[10px] bg-[#F87171] text-[#0A0F0D] font-semibold text-xs"
+            >
+              Yes, clear
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowClearConfirm(false)}
+              className="h-9 px-4 rounded-[10px] bg-[#223029] text-[#F1F5F3] font-semibold text-xs"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
+      )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-slate-300">
-          <div className="bg-slate-950/60 p-3 rounded-xl border border-slate-800/70">
-            <div className="font-bold text-white mb-1">📱 iPhone (Safari)</div>
-            <p className="text-slate-400">
-              Tap the <strong>Share</strong> icon (square with arrow pointing up) at the bottom, then scroll down and tap <strong>"Add to Home Screen"</strong>.
-            </p>
-          </div>
-
-          <div className="bg-slate-950/60 p-3 rounded-xl border border-slate-800/70">
-            <div className="font-bold text-white mb-1">🤖 Android (Chrome)</div>
-            <p className="text-slate-400">
-              Tap the <strong>three dots</strong> (⋮) in the top right corner, then tap <strong>"Add to Home Screen"</strong> or <strong>"Install App"</strong>.
-            </p>
-          </div>
+      {/* About & Trust Section (Section 10) */}
+      <div className="p-4 bg-[#111A16] border border-[#223029] rounded-[20px] space-y-2">
+        <h3 className="typography-label uppercase tracking-wider text-[#9AA9A2]">
+          About & Trust
+        </h3>
+        <p className="typography-caption text-[#9AA9A2] leading-relaxed">
+          Data lives in your own Google Sheet and on this device. There are no third-party servers, no analytics, no ads, and no data sales.
+        </p>
+        <div className="flex items-center justify-between pt-2 border-t border-[#223029] typography-caption text-[#64736C]">
+          <span>Personal Finance Tracker</span>
+          <span>Version 1.0</span>
         </div>
       </div>
     </div>

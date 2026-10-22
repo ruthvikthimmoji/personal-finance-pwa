@@ -1,72 +1,106 @@
 import React from 'react';
-import { RefreshCw, Settings, CheckCircle2, CloudOff, FileSpreadsheet } from 'lucide-react';
+import { Eye, EyeOff, RefreshCw, Settings, Check, AlertCircle } from 'lucide-react';
 
 interface HeaderProps {
   isSynced: boolean;
+  isOffline: boolean;
   isRefreshing: boolean;
+  isPrivate: boolean;
+  syncTimeText: string;
+  isStale: boolean;
+  onTogglePrivacy: () => void;
   onRefresh: () => void;
   onOpenSettings: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   isSynced,
+  isOffline,
   isRefreshing,
+  isPrivate,
+  syncTimeText,
+  isStale,
+  onTogglePrivacy,
   onRefresh,
   onOpenSettings,
 }) => {
   return (
-    <header className="sticky top-0 z-30 bg-[#090d16]/90 backdrop-blur-xl border-b border-slate-800/80 px-4 pt-3 pb-3 safe-top">
+    <header className="sticky top-0 z-30 bg-[#0A0F0D]/95 backdrop-blur-md border-b border-[#223029] px-4 pt-3 pb-3 safe-top">
       <div className="flex items-center justify-between max-w-lg mx-auto">
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 p-[1px] shadow-lg shadow-emerald-950/50">
-            <div className="w-full h-full bg-[#090d16] rounded-[11px] flex items-center justify-center font-bold text-emerald-400 text-lg">
-              ₹
-            </div>
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-base font-bold text-white tracking-tight">Finance Tracker</h1>
-              <a
-                href="https://docs.google.com/spreadsheets/d/1al3dZQcq-FOASXxkfYKt_-gvbolvGMqLjTS32EWvXjQ/edit?gid=11885255#gid=11885255"
-                target="_blank"
-                rel="noreferrer"
-                title="Open Google Sheet"
-                className="text-slate-400 hover:text-emerald-400 transition-colors p-0.5"
+        {/* Left: App title and subtle sync status */}
+        <div>
+          <h1 className="text-[17px] font-semibold text-[#F1F5F3] tracking-tight">
+            Personal Finance
+          </h1>
+          <div className="flex items-center gap-1.5 mt-0.5">
+            {isOffline ? (
+              <span className="flex items-center gap-1 text-xs text-[#FBBF24]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FBBF24]" />
+                Offline · logs queued
+              </span>
+            ) : isSynced ? (
+              <span
+                className={`flex items-center gap-1 text-xs ${
+                  isStale ? 'text-[#FBBF24]' : 'text-[#9AA9A2]'
+                }`}
               >
-                <FileSpreadsheet className="w-3.5 h-3.5" />
-              </a>
-            </div>
-            <div className="flex items-center gap-1.5 mt-0.5">
-              {isSynced ? (
-                <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-400">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  Synced with Sheets
-                </span>
-              ) : (
-                <span className="inline-flex items-center gap-1 text-[11px] font-medium text-amber-400">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                  Local / Offline
-                </span>
-              )}
-            </div>
+                <span
+                  className={`w-1.5 h-1.5 rounded-full ${
+                    isStale ? 'bg-[#FBBF24]' : 'bg-[#10B981]'
+                  }`}
+                />
+                Synced with your sheet · {syncTimeText}
+              </span>
+            ) : (
+              <span className="flex items-center gap-1 text-xs text-[#9AA9A2]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#9AA9A2]" />
+                Local mode · {syncTimeText}
+              </span>
+            )}
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        {/* Right: Actions (Privacy toggle, Refresh, Settings) */}
+        <div className="flex items-center gap-1">
+          {/* Privacy mode toggle button */}
           <button
+            type="button"
+            onClick={onTogglePrivacy}
+            className="w-11 h-11 rounded-[14px] flex items-center justify-center text-[#9AA9A2] hover:text-[#F1F5F3] hover:bg-[#17231E] active:scale-[0.98] transition-all"
+            aria-label={isPrivate ? 'Reveal numbers' : 'Hide numbers'}
+            title={isPrivate ? 'Reveal numbers' : 'Hide numbers'}
+          >
+            {isPrivate ? (
+              <EyeOff className="w-5 h-5 text-[#10B981]" strokeWidth={1.75} />
+            ) : (
+              <Eye className="w-5 h-5" strokeWidth={1.75} />
+            )}
+          </button>
+
+          {/* Refresh button */}
+          <button
+            type="button"
             onClick={onRefresh}
             disabled={isRefreshing}
-            className="w-8 h-8 rounded-lg bg-slate-800/70 border border-slate-700/60 flex items-center justify-center text-slate-300 active:scale-95 transition-all hover:bg-slate-700/60"
-            title="Refresh Data"
+            className="w-11 h-11 rounded-[14px] flex items-center justify-center text-[#9AA9A2] hover:text-[#F1F5F3] hover:bg-[#17231E] active:scale-[0.98] transition-all disabled:opacity-50"
+            aria-label="Refresh from Google Sheet"
+            title="Refresh"
           >
-            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-emerald-400' : ''}`} />
+            <RefreshCw
+              className={`w-5 h-5 ${isRefreshing ? 'animate-spin text-[#10B981]' : ''}`}
+              strokeWidth={1.75}
+            />
           </button>
+
+          {/* Settings button */}
           <button
+            type="button"
             onClick={onOpenSettings}
-            className="w-8 h-8 rounded-lg bg-slate-800/70 border border-slate-700/60 flex items-center justify-center text-slate-300 active:scale-95 transition-all hover:bg-slate-700/60"
-            title="Settings & Setup"
+            className="w-11 h-11 rounded-[14px] flex items-center justify-center text-[#9AA9A2] hover:text-[#F1F5F3] hover:bg-[#17231E] active:scale-[0.98] transition-all"
+            aria-label="Settings"
+            title="Settings"
           >
-            <Settings className="w-4 h-4" />
+            <Settings className="w-5 h-5" strokeWidth={1.75} />
           </button>
         </div>
       </div>

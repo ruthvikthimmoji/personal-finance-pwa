@@ -1,7 +1,7 @@
 {
-  "short_name": "FinanceApp",
+  "short_name": "Finance",
   "name": "Personal Finance Tracker",
-  "description": "Mobile Personal Finance Tracker synced with Google Sheets",
+  "description": "A private, calm and fast way to see your whole financial life in Indian Rupees",
   "icons": [
     {
       "src": "/icon-192.svg",
@@ -11,8 +11,8 @@
     }
   ],
   "start_url": "/",
-  "background_color": "#090d16",
-  "theme_color": "#090d16",
+  "background_color": "#0A0F0D",
+  "theme_color": "#0A0F0D",
   "display": "standalone",
   "orientation": "portrait"
 }

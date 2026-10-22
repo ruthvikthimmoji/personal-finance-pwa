@@ -109,7 +109,7 @@ export const cacheFinanceData = (data: FinanceData): void => {
 
 export const testConnection = async (url: string): Promise<{ success: boolean; message: string }> => {
   if (!url) {
-    return { success: false, message: 'Apps Script URL cannot be empty.' };
+    return { success: false, message: 'Web App URL cannot be empty.' };
   }
   try {
     const separator = url.includes('?') ? '&' : '?';
@@ -117,13 +117,13 @@ export const testConnection = async (url: string): Promise<{ success: boolean; m
     const res = await fetch(testUrl, { method: 'GET', redirect: 'follow' });
     const json = await res.json();
     if (json.success) {
-      return { success: true, message: json.message || 'Connected successfully to Google Sheet!' };
+      return { success: true, message: 'Connected. Your sheet is ready.' };
     }
-    return { success: false, message: json.error || 'Connection failed.' };
-  } catch (err: unknown) {
+    return { success: false, message: json.error || "Couldn't reach your sheet." };
+  } catch {
     return {
       success: false,
-      message: err instanceof Error ? err.message : 'Network error or CORS issue. Please check the deployment permissions ("Anyone").',
+      message: "Couldn't reach your sheet. Check Web App URL permissions ('Anyone').",
     };
   }
 };
@@ -131,7 +131,6 @@ export const testConnection = async (url: string): Promise<{ success: boolean; m
 export const fetchFinanceData = async (): Promise<FinanceData> => {
   const scriptUrl = getSavedScriptUrl();
 
-  // If Apps Script URL is set, fetch from live backend
   if (scriptUrl) {
     try {
       const separator = scriptUrl.includes('?') ? '&' : '?';
@@ -142,12 +141,11 @@ export const fetchFinanceData = async (): Promise<FinanceData> => {
         cacheFinanceData(json.data);
         return json.data;
       }
-    } catch (e) {
-      console.warn('Failed to fetch from Apps Script, using cache/fallback', e);
+    } catch {
+      // offline fallback
     }
   }
 
-  // Fallback to cache or initial data
   return getCachedFinanceData();
 };
 
@@ -157,13 +155,12 @@ export const saveBalanceLog = async (
 ): Promise<{ success: boolean; message: string }> => {
   const scriptUrl = getSavedScriptUrl();
 
-  // Optimistically update local cache
   const currentData = getCachedFinanceData();
   const total = Object.values(balances).reduce((sum, v) => sum + (Number(v) || 0), 0);
   const prevTotal = currentData.summary.bankBalance + currentData.summary.cashInHand;
   const change = total - prevTotal;
 
-  const newLogEntry: { date: string; balances: Record<string, number>; total: number; totalChange?: number } = {
+  const newLogEntry = {
     date: date,
     balances: balances,
     total: total,
@@ -172,7 +169,6 @@ export const saveBalanceLog = async (
 
   const updatedLogs = [...currentData.balanceLogs, newLogEntry];
 
-  // Update account balances
   const updatedAccountCards = currentData.accountCards.map((card) => {
     if (balances[card.name] !== undefined) {
       const newBal = Number(balances[card.name]) || 0;
@@ -207,7 +203,6 @@ export const saveBalanceLog = async (
 
   cacheFinanceData(updatedData);
 
-  // If Apps Script URL is configured, push to Google Sheets!
   if (scriptUrl) {
     try {
       const res = await fetch(scriptUrl, {
@@ -224,20 +219,23 @@ export const saveBalanceLog = async (
       });
       const json = await res.json();
       if (json && json.success) {
-        return { success: true, message: 'Saved and updated directly in your Google Sheet!' };
+        return { success: true, message: 'Balances saved.' };
       }
-      return { success: false, message: json.error || 'Failed to update Google Sheet.' };
-    } catch (err: unknown) {
       return {
         success: false,
-        message: err instanceof Error ? err.message : 'Network error updating Google Sheet. Saved locally.',
+        message: "Couldn't reach your sheet. Your entry is saved on this device and will retry.",
+      };
+    } catch {
+      return {
+        success: false,
+        message: "Couldn't reach your sheet. Your entry is saved on this device and will retry.",
       };
     }
   }
 
   return {
     success: true,
-    message: 'Saved locally! (To sync directly to Google Sheets, configure your Apps Script URL in Settings)',
+    message: 'Balances saved locally.',
   };
 };
 
@@ -247,7 +245,6 @@ export const saveInvestmentLog = async (
 ): Promise<{ success: boolean; message: string }> => {
   const scriptUrl = getSavedScriptUrl();
 
-  // Optimistically update local data
   const currentData = getCachedFinanceData();
   const investedMap: Record<string, number> = {};
   const earningsMap: Record<string, number> = {};
@@ -262,7 +259,7 @@ export const saveInvestmentLog = async (
   });
 
   const totalValue = totalInvested + totalEarnings;
-  const returnPct = totalInvested > 0 ? (totalEarnings / totalInvested) : 0;
+  const returnPct = totalInvested > 0 ? totalEarnings / totalInvested : 0;
 
   const newLogEntry = {
     date: date,
@@ -326,19 +323,22 @@ export const saveInvestmentLog = async (
       });
       const json = await res.json();
       if (json && json.success) {
-        return { success: true, message: 'Investment log saved and updated directly in Google Sheets!' };
+        return { success: true, message: 'Investments saved.' };
       }
-      return { success: false, message: json.error || 'Failed to update Google Sheet.' };
-    } catch (err: unknown) {
       return {
         success: false,
-        message: err instanceof Error ? err.message : 'Network error updating Google Sheet. Saved locally.',
+        message: "Couldn't reach your sheet. Your entry is saved on this device and will retry.",
+      };
+    } catch {
+      return {
+        success: false,
+        message: "Couldn't reach your sheet. Your entry is saved on this device and will retry.",
       };
     }
   }
 
   return {
     success: true,
-    message: 'Saved locally! (To sync directly to Google Sheets, configure your Apps Script URL in Settings)',
+    message: 'Investments saved locally.',
   };
 };

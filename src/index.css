@@ -2,29 +2,97 @@
 
 @layer base {
   :root {
-    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --bg-base: #0A0F0D;
+    --bg-surface: #111A16;
+    --bg-elevated: #17231E;
+    --border-subtle: #223029;
+    --brand-primary: #10B981;
+    --brand-glow: #34D399;
+    --brand-deep: #047857;
+
+    --text-primary: #F1F5F3;
+    --text-secondary: #9AA9A2;
+    --text-tertiary: #64736C;
+
+    --positive: #10B981;
+    --negative: #F87171;
+    --warning: #FBBF24;
+    --info: #60A5FA;
+
+    --color-bank: #10B981;
+    --color-investments: #60A5FA;
+    --color-cash: #FBBF24;
   }
 
   body {
-    font-family: var(--font-sans);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+    background-color: var(--bg-base);
+    color: var(--text-primary);
     -webkit-tap-highlight-color: transparent;
     user-select: none;
     -webkit-user-select: none;
-    background-color: #090d16;
   }
 
   input, textarea {
     user-select: text;
     -webkit-user-select: text;
+    font-variant-numeric: tabular-nums;
   }
 }
 
+/* Typography styles according to Page 5 specifications */
+.typography-display {
+  font-size: 40px;
+  line-height: 44px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.typography-title {
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.typography-amount-l {
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 600;
+}
+
+.typography-body {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.typography-label {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+}
+
+.typography-caption {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+}
+
+/* Safe area insets */
 .safe-top {
-  padding-top: max(0.75rem, env(safe-area-inset-top));
+  padding-top: max(16px, env(safe-area-inset-top));
 }
 
 .safe-bottom {
-  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
+}
+
+/* Bottom sheet transition easing: cubic-bezier(0.32, 0.72, 0, 1) */
+.sheet-transition {
+  transition: transform 280ms cubic-bezier(0.32, 0.72, 0, 1), opacity 280ms ease-out;
 }
 
 /* Custom scrollbars */
@@ -36,6 +104,6 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.2);
+  background: rgba(34, 48, 41, 0.8);
   border-radius: 9999px;
 }

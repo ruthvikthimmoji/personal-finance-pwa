@@ -1,25 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
-import { BottomNav, TabType } from './components/BottomNav';
+import { BottomNav, MainTab } from './components/BottomNav';
 import { DashboardView } from './components/DashboardView';
-import { BalanceUpdateView } from './components/BalanceUpdateModal';
-import { InvestmentUpdateView } from './components/InvestmentUpdateModal';
 import { HistoryView } from './components/HistoryView';
 import { SettingsView } from './components/SettingsView';
-import {
-  FinanceData,
-} from './types';
+import { BalanceLoggerSheet } from './components/BalanceLoggerSheet';
+import { InvestmentLoggerSheet } from './components/InvestmentLoggerSheet';
+import { QuickActionSheet } from './components/QuickActionSheet';
+import { ToastBanner } from './components/ToastBanner';
+import { FinanceData } from './types';
 import {
   fetchFinanceData,
   getCachedFinanceData,
   getSavedScriptUrl,
 } from './services/api';
+import { getRelativeSyncTime } from './utils/format';
+import { WifiOff } from 'lucide-react';
 
 export const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<TabType>('dashboard');
+  const [activeTab, setActiveTab] = useState<MainTab>('home');
   const [data, setData] = useState<FinanceData>(getCachedFinanceData());
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isSynced, setIsSynced] = useState<boolean>(Boolean(getSavedScriptUrl()));
+  const [isOffline, setIsOffline] = useState<boolean>(
+    typeof navigator !== 'undefined' ? !navigator.onLine : false
+  );
+
+  // Privacy mode: persisted between sessions (Page 6 & 11)
+  const [isPrivate, setIsPrivate] = useState<boolean>(() => {
+    return localStorage.getItem('finance_privacy_mode') === 'true';
+  });
+
+  // Bottom sheets
+  const [isBalanceSheetOpen, setIsBalanceSheetOpen] = useState(false);
+  const [isInvestSheetOpen, setIsInvestSheetOpen] = useState(false);
+  const [isQuickActionOpen, setIsQuickActionOpen] = useState(false);
+
+  // Toast
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const togglePrivacy = () => {
+    setIsPrivate((prev) => {
+      const next = !prev;
+      localStorage.setItem('finance_privacy_mode', String(next));
+      return next;
+    });
+  };
 
   const loadData = async () => {
     setIsRefreshing(true);
@@ -27,8 +53,8 @@ export const App: React.FC = () => {
       const refreshed = await fetchFinanceData();
       setData(refreshed);
       setIsSynced(Boolean(getSavedScriptUrl()));
-    } catch (e) {
-      console.error('Error refreshing data', e);
+    } catch {
+      // Offline fallback
     } finally {
       setIsRefreshing(false);
     }
@@ -36,57 +62,118 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     loadData();
+
+    const handleOnline = () => {
+      setIsOffline(false);
+      setToastMessage('Back online. Syncing...');
+      loadData();
+    };
+    const handleOffline = () => {
+      setIsOffline(true);
+      setToastMessage("You're offline. You can still log. We'll sync when you're back.");
+    };
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
   }, []);
 
-  const handleUpdateSuccess = async () => {
-    await loadData();
-    setActiveTab('dashboard');
+  const handleSaved = (message: string) => {
+    setToastMessage(message);
+    loadData();
   };
 
+  const syncInfo = getRelativeSyncTime(data.lastUpdated);
+
   return (
-    <div className="min-h-screen bg-[#090d16] text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-[#0A0F0D] text-[#F1F5F3] flex flex-col font-sans">
+      {/* Persistent Offline Banner (Page 9) */}
+      {isOffline && (
+        <div className="bg-[#FBBF24]/15 border-b border-[#FBBF24]/30 px-4 py-2 flex items-center justify-center gap-2 text-xs text-[#FBBF24]">
+          <WifiOff className="w-3.5 h-3.5" />
+          <span>You're offline. You can still log. We'll sync when you're back.</span>
+        </div>
+      )}
+
       {/* Header */}
       <Header
         isSynced={isSynced}
+        isOffline={isOffline}
         isRefreshing={isRefreshing}
+        isPrivate={isPrivate}
+        syncTimeText={syncInfo.text}
+        isStale={syncInfo.isStale}
+        onTogglePrivacy={togglePrivacy}
         onRefresh={loadData}
         onOpenSettings={() => setActiveTab('settings')}
       />
 
-      {/* Main Content Area */}
+      {/* Main Screen Content */}
       <main className="flex-1 w-full max-w-lg mx-auto pt-3">
-        {activeTab === 'dashboard' && (
+        {activeTab === 'home' && (
           <DashboardView
             data={data}
-            onNavigateToTab={(tab) => setActiveTab(tab)}
+            isPrivate={isPrivate}
+            onOpenBalanceLogger={() => setIsBalanceSheetOpen(true)}
+            onOpenInvestmentLogger={() => setIsInvestSheetOpen(true)}
           />
         )}
 
-        {activeTab === 'update-balance' && (
-          <BalanceUpdateView
+        {activeTab === 'history' && (
+          <HistoryView
             data={data}
-            onSuccess={handleUpdateSuccess}
-            onCancel={() => setActiveTab('dashboard')}
+            isPrivate={isPrivate}
+            onOpenBalanceLogger={() => setIsBalanceSheetOpen(true)}
           />
         )}
-
-        {activeTab === 'update-invest' && (
-          <InvestmentUpdateView
-            data={data}
-            onSuccess={handleUpdateSuccess}
-            onCancel={() => setActiveTab('dashboard')}
-          />
-        )}
-
-        {activeTab === 'history' && <HistoryView data={data} />}
 
         {activeTab === 'settings' && (
-          <SettingsView onRefreshData={loadData} />
+          <SettingsView
+            onRefreshData={loadData}
+            isPrivate={isPrivate}
+            onTogglePrivacy={togglePrivacy}
+          />
         )}
       </main>
 
-      {/* Bottom Navigation */}
-      <BottomNav activeTab={activeTab} onChangeTab={setActiveTab} />
+      {/* Bottom Sheets for Quick 10-Second Updates */}
+      <BalanceLoggerSheet
+        isOpen={isBalanceSheetOpen}
+        data={data}
+        onClose={() => setIsBalanceSheetOpen(false)}
+        onSaved={handleSaved}
+      />
+
+      <InvestmentLoggerSheet
+        isOpen={isInvestSheetOpen}
+        data={data}
+        onClose={() => setIsInvestSheetOpen(false)}
+        onSaved={handleSaved}
+      />
+
+      <QuickActionSheet
+        isOpen={isQuickActionOpen}
+        onClose={() => setIsQuickActionOpen(false)}
+        onSelectBalance={() => setIsBalanceSheetOpen(true)}
+        onSelectInvest={() => setIsInvestSheetOpen(true)}
+      />
+
+      {/* Toast Notification Banner (appears above tab bar, lasts 3s) */}
+      <ToastBanner
+        message={toastMessage}
+        onDismiss={() => setToastMessage(null)}
+      />
+
+      {/* Fixed Bottom Navigation (Page 8) */}
+      <BottomNav
+        activeTab={activeTab}
+        onChangeTab={setActiveTab}
+        onOpenQuickAction={() => setIsQuickActionOpen(true)}
+      />
     </div>
   );
 };

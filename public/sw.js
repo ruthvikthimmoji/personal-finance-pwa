@@ -1,9 +1,13 @@
-const CACHE_NAME = 'personal-finance-v1';
+const CACHE_NAME = 'personal-finance-v2';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/icon-192.svg'
+  '/icon-192.png',
+  '/icon-512.png',
+  '/apple-touch-icon.png',
+  '/favicon.png',
+  '/logo-mark.png'
 ];
 
 self.addEventListener('install', (event) => {

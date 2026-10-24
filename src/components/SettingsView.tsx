@@ -486,6 +486,12 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               bgColor="#ffffff"
               fgColor="#111827"
               level="M"
+              imageSettings={{
+                src: '/logo-mark.png',
+                height: 24,
+                width: 24,
+                excavate: true,
+              }}
             />
           </div>
           <div className="space-y-1 typography-caption text-[#5E6A75]">
@@ -575,7 +581,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       {/* About & Trust Section */}
       <div className="p-4 bg-white border border-[#E8E3DA] rounded-[20px] space-y-3 shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-[14px] bg-[#FAF8F5] border border-[#E8E3DA] flex items-center justify-center p-1.5 shadow-xs shrink-0">
+          <div className="w-10 h-10 rounded-[14px] bg-white border border-[#E8E3DA] flex items-center justify-center p-1.5 shadow-xs shrink-0">
             <img src="/logo-mark.png" alt="Logo" className="w-full h-full object-contain" />
           </div>
           <div>

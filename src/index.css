@@ -2,31 +2,31 @@
 
 @layer base {
   :root {
-    --bg-base: #0B0F1E;
-    --bg-surface: #121830;
-    --bg-elevated: #1A2142;
-    --border-subtle: #262F57;
-    --brand-primary: #5B6CFF;
-    --brand-deep: #3D4AD6;
-    --brand-glow: #8E9BFF;
-    --accent-gold: #F5C76B;
+    --bg-base: #0D1B2A;
+    --bg-surface: #132238;
+    --bg-elevated: #1B2D4A;
+    --border-subtle: #223854;
+    --brand-primary: #1A73E8;
+    --brand-deep: #1558B0;
+    --brand-glow: #4285F4;
+    --accent-gold: #F59E0B;
 
-    --text-primary: #F4F6FF;
-    --text-secondary: #A3ACD1;
-    --text-tertiary: #6B7499;
+    --text-primary: #E6E9EC;
+    --text-secondary: #9CADBC;
+    --text-tertiary: #607387;
 
-    --positive: #34D3A0;
+    --positive: #2BC48A;
     --negative: #FF6E8A;
-    --warning: #FFB84D;
-    --info: #5BC0FF;
+    --warning: #F59E0B;
+    --info: #1A73E8;
 
-    --color-bank: #5B6CFF;
-    --color-investments: #22D3EE;
-    --color-cash: #F5C76B;
+    --color-bank: #1A73E8;
+    --color-investments: #2BC48A;
+    --color-cash: #F59E0B;
   }
 
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Instagram Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-feature-settings: "tnum";
     font-variant-numeric: tabular-nums;
     background-color: var(--bg-base);
@@ -39,12 +39,14 @@
   input, textarea {
     user-select: text;
     -webkit-user-select: text;
+    font-family: inherit;
     font-variant-numeric: tabular-nums;
   }
 }
 
-/* Typography styles according to Page 5 specifications */
+/* Typography styles */
 .typography-display {
+  font-family: 'Instagram Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 40px;
   line-height: 44px;
   font-weight: 700;
@@ -52,6 +54,7 @@
 }
 
 .typography-title {
+  font-family: 'Instagram Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 24px;
   line-height: 30px;
   font-weight: 600;
@@ -59,24 +62,28 @@
 }
 
 .typography-amount-l {
+  font-family: 'Instagram Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 20px;
   line-height: 26px;
   font-weight: 600;
 }
 
 .typography-body {
+  font-family: 'Instagram Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
 }
 
 .typography-label {
+  font-family: 'Instagram Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 13px;
   line-height: 18px;
   font-weight: 500;
 }
 
 .typography-caption {
+  font-family: 'Instagram Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 12px;
   line-height: 16px;
   font-weight: 400;
@@ -105,6 +112,6 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(38, 47, 87, 0.8);
+  background: rgba(34, 56, 84, 0.8);
   border-radius: 9999px;
 }

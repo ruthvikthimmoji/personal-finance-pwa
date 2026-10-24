@@ -37,15 +37,15 @@ export const MonogramAvatar: React.FC<MonogramAvatarProps> = ({
 }) => {
   const monogram = getMonogram(name);
 
-  // New Asset allocation colors from Page 4:
-  // Bank accounts: #5B6CFF (indigo)
-  // Investments: #22D3EE (cyan)
-  // Cash in hand: #F5C76B (gold)
-  let bgStyle = 'bg-[#5B6CFF]/15 text-[#5B6CFF] border-[#5B6CFF]/30';
+  // Palette:
+  // Bank accounts: #1A73E8 (Primary blue)
+  // Investments: #2BC48A (Fresh green)
+  // Cash in hand: #F59E0B (Amber)
+  let bgStyle = 'bg-[#1A73E8]/15 text-[#1A73E8] border-[#1A73E8]/30';
   if (category === 'cash') {
-    bgStyle = 'bg-[#F5C76B]/15 text-[#F5C76B] border-[#F5C76B]/30';
+    bgStyle = 'bg-[#F59E0B]/15 text-[#F59E0B] border-[#F59E0B]/30';
   } else if (category === 'investment') {
-    bgStyle = 'bg-[#22D3EE]/15 text-[#22D3EE] border-[#22D3EE]/30';
+    bgStyle = 'bg-[#2BC48A]/15 text-[#2BC48A] border-[#2BC48A]/30';
   }
 
   const sizeClass =

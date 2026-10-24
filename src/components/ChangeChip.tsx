@@ -16,7 +16,7 @@ export const ChangeChip: React.FC<ChangeChipProps> = ({
 }) => {
   if (isPrivate) {
     return (
-      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[#1A2142] text-[#A3ACD1] border border-[#262F57]">
+      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[#1B2D4A] text-[#9CADBC] border border-[#223854]">
         ••••••
       </span>
     );
@@ -24,7 +24,7 @@ export const ChangeChip: React.FC<ChangeChipProps> = ({
 
   if (amount === undefined || amount === null || amount === 0) {
     return (
-      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[#1A2142] text-[#6B7499]">
+      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[#1B2D4A] text-[#607387]">
         —
       </span>
     );
@@ -35,11 +35,11 @@ export const ChangeChip: React.FC<ChangeChipProps> = ({
   // Format amount with Indian grouping
   const formattedAmount = formatMoney(amount, { isChange: false });
 
-  // Semantic tokens from Page 4:
-  // positive: #34D3A0 (mint)
-  // negative: #FF6E8A (soft coral)
+  // Semantic tokens:
+  // positive: #2BC48A (Fresh green)
+  // negative: #FF6E8A (Soft coral)
   const colorClasses = isPositive
-    ? 'bg-[#34D3A0]/15 text-[#34D3A0] border-[#34D3A0]/25'
+    ? 'bg-[#2BC48A]/15 text-[#2BC48A] border-[#2BC48A]/25'
     : 'bg-[#FF6E8A]/15 text-[#FF6E8A] border-[#FF6E8A]/25';
 
   const arrow = isPositive ? '▲' : '▼';

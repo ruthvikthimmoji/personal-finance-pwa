@@ -573,10 +573,20 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       )}
 
       {/* About & Trust Section */}
-      <div className="p-4 bg-white border border-[#E8E3DA] rounded-[20px] space-y-2 shadow-sm">
-        <h3 className="typography-label uppercase tracking-wider text-[#5E6A75]">
-          About & Trust
-        </h3>
+      <div className="p-4 bg-white border border-[#E8E3DA] rounded-[20px] space-y-3 shadow-sm">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-[14px] bg-[#FAF8F5] border border-[#E8E3DA] flex items-center justify-center p-1.5 shadow-xs shrink-0">
+            <img src="/logo-mark.png" alt="Logo" className="w-full h-full object-contain" />
+          </div>
+          <div>
+            <h3 className="typography-body font-semibold text-[#111827]">
+              Personal Finance
+            </h3>
+            <p className="typography-caption text-[#5E6A75]">
+              Private · Calm · Real-time
+            </p>
+          </div>
+        </div>
         <p className="typography-caption text-[#5E6A75] leading-relaxed">
           Data lives in your own Google Sheet and on this device. There are no third-party servers, no analytics, no ads, and no data sales.
         </p>

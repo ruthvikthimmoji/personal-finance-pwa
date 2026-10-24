@@ -27,12 +27,16 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="sticky top-0 z-30 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-[#E8E3DA] px-4 pt-3 pb-3 safe-top">
       <div className="flex items-center justify-between max-w-lg mx-auto">
-        {/* Left: App title and subtle sync status */}
-        <div>
-          <h1 className="text-[17px] font-semibold text-[#111827] tracking-tight">
-            Personal Finance
-          </h1>
-          <div className="flex items-center gap-1.5 mt-0.5">
+        {/* Left: Brand Logo + App title and subtle sync status */}
+        <div className="flex items-center gap-2.5 min-w-0">
+          <div className="w-8 h-8 rounded-xl bg-white border border-[#E8E3DA] flex items-center justify-center p-1 shadow-xs shrink-0">
+            <img src="/logo-mark.png" alt="Logo" className="w-5 h-5 object-contain" />
+          </div>
+          <div className="min-w-0">
+            <h1 className="text-[17px] font-semibold text-[#111827] tracking-tight leading-tight truncate">
+              Personal Finance
+            </h1>
+            <div className="flex items-center gap-1.5 mt-0.5">
             {isOffline ? (
               <span className="flex items-center gap-1 text-xs text-[#D97706]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#D97706]" />
@@ -57,6 +61,7 @@ export const Header: React.FC<HeaderProps> = ({
                 Local mode · {syncTimeText}
               </span>
             )}
+            </div>
           </div>
         </div>
 

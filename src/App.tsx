@@ -9,6 +9,7 @@ import { BalanceLoggerSheet } from './components/BalanceLoggerSheet';
 import { InvestmentLoggerSheet } from './components/InvestmentLoggerSheet';
 import { QuickActionSheet } from './components/QuickActionSheet';
 import { ToastBanner } from './components/ToastBanner';
+import { SplashScreen } from './components/SplashScreen';
 import { FinanceData } from './types';
 import {
   fetchFinanceData,
@@ -19,6 +20,7 @@ import { getRelativeSyncTime } from './utils/format';
 import { WifiOff } from 'lucide-react';
 
 export const App: React.FC = () => {
+  const [showSplash, setShowSplash] = useState(true);
   const [activeTab, setActiveTab] = useState<MainTab>('home');
   const [data, setData] = useState<FinanceData>(getCachedFinanceData());
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -92,6 +94,11 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-[#111827] flex flex-col font-sans">
+      {/* Attractive Animated Fintech Splash Screen */}
+      {showSplash && (
+        <SplashScreen onFinish={() => setShowSplash(false)} />
+      )}
+
       {/* Persistent Offline Banner */}
       {isOffline && (
         <div className="bg-[#FEF3C7] border-b border-[#FDE68A] px-4 py-2 flex items-center justify-center gap-2 text-xs text-[#92400E]">

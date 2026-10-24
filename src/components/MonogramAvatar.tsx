@@ -38,14 +38,14 @@ export const MonogramAvatar: React.FC<MonogramAvatarProps> = ({
   const monogram = getMonogram(name);
 
   // Palette:
-  // Bank accounts: #1A73E8 (Primary blue)
-  // Investments: #2BC48A (Fresh green)
-  // Cash in hand: #F59E0B (Amber)
-  let bgStyle = 'bg-[#1A73E8]/15 text-[#1A73E8] border-[#1A73E8]/30';
+  // Bank accounts: #1A73E8 (Fintech primary blue)
+  // Investments: #16A34A (Fintech green)
+  // Cash in hand: #D97706 (Amber)
+  let bgStyle = 'bg-[#1A73E8]/10 text-[#1A73E8] border-[#1A73E8]/20';
   if (category === 'cash') {
-    bgStyle = 'bg-[#F59E0B]/15 text-[#F59E0B] border-[#F59E0B]/30';
+    bgStyle = 'bg-[#D97706]/10 text-[#D97706] border-[#D97706]/20';
   } else if (category === 'investment') {
-    bgStyle = 'bg-[#2BC48A]/15 text-[#2BC48A] border-[#2BC48A]/30';
+    bgStyle = 'bg-[#16A34A]/10 text-[#16A34A] border-[#16A34A]/20';
   }
 
   const sizeClass =

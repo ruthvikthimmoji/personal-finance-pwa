@@ -16,7 +16,7 @@ export const ChangeChip: React.FC<ChangeChipProps> = ({
 }) => {
   if (isPrivate) {
     return (
-      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[#1B2D4A] text-[#9CADBC] border border-[#223854]">
+      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[#F3EFE6] text-[#5E6A75] border border-[#E8E3DA]">
         ••••••
       </span>
     );
@@ -24,7 +24,7 @@ export const ChangeChip: React.FC<ChangeChipProps> = ({
 
   if (amount === undefined || amount === null || amount === 0) {
     return (
-      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[#1B2D4A] text-[#607387]">
+      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[#F3EFE6] text-[#8C9BA8]">
         —
       </span>
     );
@@ -36,11 +36,11 @@ export const ChangeChip: React.FC<ChangeChipProps> = ({
   const formattedAmount = formatMoney(amount, { isChange: false });
 
   // Semantic tokens:
-  // positive: #2BC48A (Fresh green)
-  // negative: #FF6E8A (Soft coral)
+  // positive: #16A34A (Fintech green)
+  // negative: #DC2626 (Fintech red)
   const colorClasses = isPositive
-    ? 'bg-[#2BC48A]/15 text-[#2BC48A] border-[#2BC48A]/25'
-    : 'bg-[#FF6E8A]/15 text-[#FF6E8A] border-[#FF6E8A]/25';
+    ? 'bg-[#16A34A]/10 text-[#16A34A] border-[#16A34A]/20'
+    : 'bg-[#DC2626]/10 text-[#DC2626] border-[#DC2626]/20';
 
   const arrow = isPositive ? '▲' : '▼';
   const sign = isPositive ? PLUS_SIGN : MINUS_SIGN;

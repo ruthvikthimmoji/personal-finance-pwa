@@ -317,8 +317,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
     <div className="space-y-4 pb-28 px-4 max-w-lg mx-auto">
       {/* Title */}
       <div className="px-1 pt-1">
-        <h2 className="typography-title text-[#E6E9EC]">Settings</h2>
-        <p className="typography-caption text-[#9CADBC] mt-0.5">
+        <h2 className="typography-title text-[#111827]">Settings</h2>
+        <p className="typography-caption text-[#5E6A75] mt-0.5">
           Sync, privacy and configuration
         </p>
       </div>
@@ -328,33 +328,33 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         href="https://docs.google.com/spreadsheets/d/1al3dZQcq-FOASXxkfYKt_-gvbolvGMqLjTS32EWvXjQ/edit?gid=11885255#gid=11885255"
         target="_blank"
         rel="noreferrer"
-        className="bg-[#132238] border border-[#223854] rounded-[20px] p-4 flex items-center justify-between hover:bg-[#1B2D4A]/40 active:bg-[#1B2D4A] transition-all"
+        className="bg-white border border-[#E8E3DA] rounded-[20px] p-4 flex items-center justify-between hover:bg-[#FAF8F5] active:bg-[#F3EFE6] transition-all shadow-sm"
       >
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-[#1A73E8]/15 border border-[#1A73E8]/30 flex items-center justify-center text-[#1A73E8]">
+          <div className="w-9 h-9 rounded-xl bg-[#1A73E8]/10 border border-[#1A73E8]/20 flex items-center justify-center text-[#1A73E8]">
             <FileSpreadsheet className="w-5 h-5" strokeWidth={1.75} />
           </div>
           <div>
-            <div className="typography-body font-semibold text-[#E6E9EC]">
+            <div className="typography-body font-semibold text-[#111827]">
               Open Google Sheet
             </div>
-            <div className="typography-caption text-[#9CADBC]">
+            <div className="typography-caption text-[#5E6A75]">
               Personal Finance Tracker
             </div>
           </div>
         </div>
-        <ExternalLink className="w-5 h-5 text-[#9CADBC]" strokeWidth={1.75} />
+        <ExternalLink className="w-5 h-5 text-[#5E6A75]" strokeWidth={1.75} />
       </a>
 
       {/* Sync Card */}
-      <div className="bg-[#132238] border border-[#223854] rounded-[20px] p-4 space-y-3">
+      <div className="bg-white border border-[#E8E3DA] rounded-[20px] p-4 space-y-3 shadow-sm">
         <div className="flex items-center justify-between">
-          <h3 className="typography-label uppercase tracking-wider text-[#9CADBC]">
+          <h3 className="typography-label uppercase tracking-wider text-[#5E6A75]">
             Google Sheets sync
           </h3>
           {syncStatus === 'connected' && (
-            <span className="inline-flex items-center gap-1 text-xs text-[#2BC48A] font-medium">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#2BC48A]" />
+            <span className="inline-flex items-center gap-1 text-xs text-[#16A34A] font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#16A34A]" />
               Connected
             </span>
           )}
@@ -368,12 +368,12 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               placeholder="https://script.google.com/macros/s/.../exec"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
-              className="w-full h-[56px] pl-4 pr-12 rounded-[14px] bg-[#1B2D4A] border border-[#223854] text-[16px] text-[#E6E9EC] placeholder-[#607387] focus:outline-none focus:border-[#4285F4] focus:ring-2 focus:ring-[#4285F4]/20 font-mono text-sm"
+              className="w-full h-[56px] pl-4 pr-12 rounded-[14px] bg-[#FAF8F5] border border-[#E8E3DA] text-[16px] text-[#111827] placeholder-[#8C9BA8] focus:outline-none focus:border-[#1A73E8] focus:ring-2 focus:ring-[#1A73E8]/20 font-mono text-sm"
             />
             <button
               type="button"
               onClick={() => setIsUrlRevealed(!isUrlRevealed)}
-              className="absolute right-3 p-1.5 text-[#9CADBC] hover:text-[#E6E9EC]"
+              className="absolute right-3 p-1.5 text-[#5E6A75] hover:text-[#111827]"
               title={isUrlRevealed ? 'Hide URL' : 'Reveal URL'}
             >
               {isUrlRevealed ? (
@@ -389,10 +389,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               type="button"
               onClick={handleTestConnection}
               disabled={isTesting}
-              className="h-[44px] rounded-[14px] bg-[#1B2D4A] hover:bg-[#223854] active:scale-[0.98] border border-[#223854] text-[#E6E9EC] font-semibold text-xs flex items-center justify-center gap-2 transition-all disabled:opacity-40"
+              className="h-[44px] rounded-[14px] bg-[#F3EFE6] hover:bg-[#EAE4D7] active:scale-[0.98] border border-[#E8E3DA] text-[#111827] font-semibold text-xs flex items-center justify-center gap-2 transition-all disabled:opacity-40"
             >
               {isTesting ? (
-                <span className="w-4 h-4 border-2 border-[#E6E9EC] border-t-transparent rounded-full animate-spin" />
+                <span className="w-4 h-4 border-2 border-[#111827] border-t-transparent rounded-full animate-spin" />
               ) : (
                 <span>Test connection</span>
               )}
@@ -411,10 +411,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             <p
               className={`typography-caption pt-1 ${
                 syncStatus === 'connected'
-                  ? 'text-[#2BC48A]'
+                  ? 'text-[#16A34A]'
                   : syncStatus === 'error'
-                  ? 'text-[#FF6E8A]'
-                  : 'text-[#9CADBC]'
+                  ? 'text-[#DC2626]'
+                  : 'text-[#5E6A75]'
               }`}
             >
               {statusMessage}
@@ -424,21 +424,21 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       </div>
 
       {/* 1-Minute Setup Guide (Collapsible) */}
-      <div className="bg-[#132238] border border-[#223854] rounded-[20px] overflow-hidden">
+      <div className="bg-white border border-[#E8E3DA] rounded-[20px] overflow-hidden shadow-sm">
         <button
           type="button"
           onClick={() => setIsGuideOpen(!isGuideOpen)}
-          className="w-full p-4 flex items-center justify-between text-left hover:bg-[#1B2D4A]/40 transition-colors"
+          className="w-full p-4 flex items-center justify-between text-left hover:bg-[#FAF8F5] transition-colors"
         >
           <div>
-            <div className="typography-body font-semibold text-[#E6E9EC]">
+            <div className="typography-body font-semibold text-[#111827]">
               Setup guide
             </div>
-            <div className="typography-caption text-[#9CADBC]">
+            <div className="typography-caption text-[#5E6A75]">
               Connect your Google Sheet in 1 minute
             </div>
           </div>
-          <div className="text-[#9CADBC]">
+          <div className="text-[#5E6A75]">
             {isGuideOpen ? (
               <ChevronUp className="w-5 h-5" strokeWidth={1.75} />
             ) : (
@@ -448,7 +448,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         </button>
 
         {isGuideOpen && (
-          <div className="px-4 pb-4 pt-1 border-t border-[#223854] bg-[#1B2D4A]/30 space-y-3">
+          <div className="px-4 pb-4 pt-1 border-t border-[#E8E3DA] bg-[#FAF8F5] space-y-3">
             <div className="flex justify-end pt-1">
               <button
                 type="button"
@@ -460,12 +460,12 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               </button>
             </div>
 
-            <ol className="typography-caption text-[#9CADBC] space-y-2 list-decimal list-inside leading-relaxed">
-              <li>In your Google Sheet, open <strong className="text-[#E6E9EC]">Extensions &gt; Apps Script</strong>.</li>
-              <li>Delete all existing code, paste the copied script, and click <strong className="text-[#E6E9EC]">Save</strong>.</li>
-              <li>Click <strong className="text-[#E6E9EC]">Deploy &gt; New deployment</strong>.</li>
-              <li>Select type <strong className="text-[#E6E9EC]">Web app</strong>.</li>
-              <li>Set Execute as: <strong className="text-[#E6E9EC]">Me</strong>, Who has access: <strong className="text-[#E6E9EC]">Anyone</strong>.</li>
+            <ol className="typography-caption text-[#5E6A75] space-y-2 list-decimal list-inside leading-relaxed">
+              <li>In your Google Sheet, open <strong className="text-[#111827]">Extensions &gt; Apps Script</strong>.</li>
+              <li>Delete all existing code, paste the copied script, and click <strong className="text-[#111827]">Save</strong>.</li>
+              <li>Click <strong className="text-[#111827]">Deploy &gt; New deployment</strong>.</li>
+              <li>Select type <strong className="text-[#111827]">Web app</strong>.</li>
+              <li>Set Execute as: <strong className="text-[#111827]">Me</strong>, Who has access: <strong className="text-[#111827]">Anyone</strong>.</li>
               <li>Click Deploy, approve permissions (click Advanced &gt; Go to project), and paste your Web App URL above.</li>
             </ol>
           </div>
@@ -473,23 +473,23 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       </div>
 
       {/* Open on Phone QR Code */}
-      <div className="bg-[#132238] border border-[#223854] rounded-[20px] p-4 space-y-3">
-        <h3 className="typography-label uppercase tracking-wider text-[#9CADBC]">
+      <div className="bg-white border border-[#E8E3DA] rounded-[20px] p-4 space-y-3 shadow-sm">
+        <h3 className="typography-label uppercase tracking-wider text-[#5E6A75]">
           Open on your phone
         </h3>
 
-        <div className="flex items-center gap-4 bg-[#1B2D4A] p-3 rounded-[14px] border border-[#223854]">
-          <div className="bg-white p-2 rounded-[10px] shrink-0">
+        <div className="flex items-center gap-4 bg-[#FAF8F5] p-3 rounded-[14px] border border-[#E8E3DA]">
+          <div className="bg-white p-2 rounded-[10px] shrink-0 border border-[#E8E3DA]">
             <QRCodeSVG
               value={phoneUrl}
               size={100}
               bgColor="#ffffff"
-              fgColor="#0D1B2A"
+              fgColor="#111827"
               level="M"
             />
           </div>
-          <div className="space-y-1 typography-caption text-[#9CADBC]">
-            <p className="font-semibold text-[#E6E9EC]">
+          <div className="space-y-1 typography-caption text-[#5E6A75]">
+            <p className="font-semibold text-[#111827]">
               Scan with your camera
             </p>
             <p>
@@ -503,15 +503,15 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       </div>
 
       {/* Privacy & Cache */}
-      <div className="bg-[#132238] border border-[#223854] rounded-[20px] p-4 space-y-3">
-        <h3 className="typography-label uppercase tracking-wider text-[#9CADBC]">
+      <div className="bg-white border border-[#E8E3DA] rounded-[20px] p-4 space-y-3 shadow-sm">
+        <h3 className="typography-label uppercase tracking-wider text-[#5E6A75]">
           Privacy & Data
         </h3>
 
         <div className="flex items-center justify-between py-1">
           <div>
-            <div className="typography-body text-[#E6E9EC]">Privacy mode</div>
-            <div className="typography-caption text-[#9CADBC]">
+            <div className="typography-body text-[#111827]">Privacy mode</div>
+            <div className="typography-caption text-[#5E6A75]">
               Masks money amounts as ₹•••••• in public
             </div>
           </div>
@@ -519,7 +519,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             type="button"
             onClick={onTogglePrivacy}
             className={`w-12 h-7 rounded-full p-1 transition-colors ${
-              isPrivate ? 'bg-[#1A73E8]' : 'bg-[#223854]'
+              isPrivate ? 'bg-[#1A73E8]' : 'bg-[#E8E3DA]'
             }`}
           >
             <div
@@ -530,17 +530,17 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           </button>
         </div>
 
-        <div className="pt-2 border-t border-[#223854] flex items-center justify-between">
+        <div className="pt-2 border-t border-[#E8E3DA] flex items-center justify-between">
           <div>
-            <div className="typography-body text-[#E6E9EC]">Local cache</div>
-            <div className="typography-caption text-[#9CADBC]">
+            <div className="typography-body text-[#111827]">Local cache</div>
+            <div className="typography-caption text-[#5E6A75]">
               Reset cached entries to sheet defaults
             </div>
           </div>
           <button
             type="button"
             onClick={() => setShowClearConfirm(true)}
-            className="h-9 px-3 rounded-[10px] border border-[#FF6E8A]/40 text-[#FF6E8A] hover:bg-[#FF6E8A]/10 text-xs font-medium active:scale-[0.98]"
+            className="h-9 px-3 rounded-[10px] border border-[#DC2626]/30 text-[#DC2626] hover:bg-[#DC2626]/10 text-xs font-medium active:scale-[0.98]"
           >
             Clear data
           </button>
@@ -549,22 +549,22 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
 
       {/* Clear Cache Confirmation Dialog */}
       {showClearConfirm && (
-        <div className="p-4 rounded-[14px] bg-[#1B2D4A] border border-[#FF6E8A]/40 space-y-2.5">
-          <p className="typography-body text-[#E6E9EC]">
+        <div className="p-4 rounded-[14px] bg-[#FEF2F2] border border-[#FECACA] space-y-2.5">
+          <p className="typography-body text-[#991B1B]">
             Clear local cache? Your Google Sheet data will not be affected.
           </p>
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={handleClearData}
-              className="h-9 px-4 rounded-[10px] bg-[#FF6E8A] text-[#0D1B2A] font-semibold text-xs"
+              className="h-9 px-4 rounded-[10px] bg-[#DC2626] text-white font-semibold text-xs"
             >
               Yes, clear
             </button>
             <button
               type="button"
               onClick={() => setShowClearConfirm(false)}
-              className="h-9 px-4 rounded-[10px] bg-[#223854] text-[#E6E9EC] font-semibold text-xs"
+              className="h-9 px-4 rounded-[10px] bg-[#E8E3DA] text-[#111827] font-semibold text-xs"
             >
               Cancel
             </button>
@@ -573,14 +573,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       )}
 
       {/* About & Trust Section */}
-      <div className="p-4 bg-[#132238] border border-[#223854] rounded-[20px] space-y-2">
-        <h3 className="typography-label uppercase tracking-wider text-[#9CADBC]">
+      <div className="p-4 bg-white border border-[#E8E3DA] rounded-[20px] space-y-2 shadow-sm">
+        <h3 className="typography-label uppercase tracking-wider text-[#5E6A75]">
           About & Trust
         </h3>
-        <p className="typography-caption text-[#9CADBC] leading-relaxed">
+        <p className="typography-caption text-[#5E6A75] leading-relaxed">
           Data lives in your own Google Sheet and on this device. There are no third-party servers, no analytics, no ads, and no data sales.
         </p>
-        <div className="flex items-center justify-between pt-2 border-t border-[#223854] typography-caption text-[#607387]">
+        <div className="flex items-center justify-between pt-2 border-t border-[#E8E3DA] typography-caption text-[#8C9BA8]">
           <span>Personal Finance Tracker</span>
           <span>Version 1.0</span>
         </div>

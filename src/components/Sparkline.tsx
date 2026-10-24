@@ -18,8 +18,8 @@ export const Sparkline: React.FC<SparklineProps> = ({
   const range = max - min || 1;
 
   const isUp = dataPoints[dataPoints.length - 1] >= dataPoints[0];
-  // Fresh green (#2BC48A) for up, Coral (#FF6E8A) for down
-  const strokeColor = isUp ? '#2BC48A' : '#FF6E8A';
+  // Fintech green (#16A34A) for up, Crimson red (#DC2626) for down
+  const strokeColor = isUp ? '#16A34A' : '#DC2626';
 
   const padding = 4;
   const effectiveWidth = width - padding * 2;

@@ -91,10 +91,10 @@ export const App: React.FC = () => {
   const syncInfo = getRelativeSyncTime(data.lastUpdated);
 
   return (
-    <div className="min-h-screen bg-[#0D1B2A] text-[#E6E9EC] flex flex-col font-sans">
-      {/* Persistent Offline Banner (Page 9 & 10 warning: #FFB84D) */}
+    <div className="min-h-screen bg-[#FAF8F5] text-[#111827] flex flex-col font-sans">
+      {/* Persistent Offline Banner */}
       {isOffline && (
-        <div className="bg-[#FFB84D]/15 border-b border-[#FFB84D]/30 px-4 py-2 flex items-center justify-center gap-2 text-xs text-[#FFB84D]">
+        <div className="bg-[#FEF3C7] border-b border-[#FDE68A] px-4 py-2 flex items-center justify-center gap-2 text-xs text-[#92400E]">
           <WifiOff className="w-3.5 h-3.5" />
           <span>You're offline. You can still log. We'll sync when you're back.</span>
         </div>

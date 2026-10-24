@@ -25,35 +25,35 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenSettings,
 }) => {
   return (
-    <header className="sticky top-0 z-30 bg-[#0D1B2A]/95 backdrop-blur-md border-b border-[#223854] px-4 pt-3 pb-3 safe-top">
+    <header className="sticky top-0 z-30 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-[#E8E3DA] px-4 pt-3 pb-3 safe-top">
       <div className="flex items-center justify-between max-w-lg mx-auto">
         {/* Left: App title and subtle sync status */}
         <div>
-          <h1 className="text-[17px] font-semibold text-[#E6E9EC] tracking-tight">
+          <h1 className="text-[17px] font-semibold text-[#111827] tracking-tight">
             Personal Finance
           </h1>
           <div className="flex items-center gap-1.5 mt-0.5">
             {isOffline ? (
-              <span className="flex items-center gap-1 text-xs text-[#F59E0B]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#F59E0B]" />
+              <span className="flex items-center gap-1 text-xs text-[#D97706]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D97706]" />
                 Offline · logs queued
               </span>
             ) : isSynced ? (
               <span
                 className={`flex items-center gap-1 text-xs ${
-                  isStale ? 'text-[#F59E0B]' : 'text-[#9CADBC]'
+                  isStale ? 'text-[#D97706]' : 'text-[#5E6A75]'
                 }`}
               >
                 <span
                   className={`w-1.5 h-1.5 rounded-full ${
-                    isStale ? 'bg-[#F59E0B]' : 'bg-[#2BC48A]'
+                    isStale ? 'bg-[#D97706]' : 'bg-[#16A34A]'
                   }`}
                 />
                 Synced with your sheet · {syncTimeText}
               </span>
             ) : (
-              <span className="flex items-center gap-1 text-xs text-[#9CADBC]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#9CADBC]" />
+              <span className="flex items-center gap-1 text-xs text-[#5E6A75]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#8C9BA8]" />
                 Local mode · {syncTimeText}
               </span>
             )}
@@ -66,7 +66,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={onTogglePrivacy}
-            className="w-11 h-11 rounded-[14px] flex items-center justify-center text-[#9CADBC] hover:text-[#E6E9EC] hover:bg-[#1B2D4A] active:scale-[0.98] transition-all"
+            className="w-11 h-11 rounded-[14px] flex items-center justify-center text-[#5E6A75] hover:text-[#111827] hover:bg-[#F3EFE6] active:scale-[0.98] transition-all"
             aria-label={isPrivate ? 'Reveal numbers' : 'Hide numbers'}
             title={isPrivate ? 'Reveal numbers' : 'Hide numbers'}
           >
@@ -82,7 +82,7 @@ export const Header: React.FC<HeaderProps> = ({
             type="button"
             onClick={onRefresh}
             disabled={isRefreshing}
-            className="w-11 h-11 rounded-[14px] flex items-center justify-center text-[#9CADBC] hover:text-[#E6E9EC] hover:bg-[#1B2D4A] active:scale-[0.98] transition-all disabled:opacity-50"
+            className="w-11 h-11 rounded-[14px] flex items-center justify-center text-[#5E6A75] hover:text-[#111827] hover:bg-[#F3EFE6] active:scale-[0.98] transition-all disabled:opacity-50"
             aria-label="Refresh from Google Sheet"
             title="Refresh"
           >
@@ -96,7 +96,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={onOpenSettings}
-            className="w-11 h-11 rounded-[14px] flex items-center justify-center text-[#9CADBC] hover:text-[#E6E9EC] hover:bg-[#1B2D4A] active:scale-[0.98] transition-all"
+            className="w-11 h-11 rounded-[14px] flex items-center justify-center text-[#5E6A75] hover:text-[#111827] hover:bg-[#F3EFE6] active:scale-[0.98] transition-all"
             aria-label="Settings"
             title="Settings"
           >

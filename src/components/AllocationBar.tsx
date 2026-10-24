@@ -28,7 +28,7 @@ export const AllocationBar: React.FC<AllocationBarProps> = ({
   return (
     <div className="space-y-2.5">
       {/* 8px tall segmented bar with 2px gaps */}
-      <div className="h-2 w-full bg-[#1B2D4A] rounded-full overflow-hidden flex gap-[2px]">
+      <div className="h-2 w-full bg-[#E8E3DA] rounded-full overflow-hidden flex gap-[2px]">
         {bankPct > 0 && (
           <div
             style={{ width: `${bankPct}%` }}
@@ -43,7 +43,7 @@ export const AllocationBar: React.FC<AllocationBarProps> = ({
         {cashPct > 0 && (
           <div
             style={{ width: `${cashPct}%` }}
-            className={`h-full bg-[#F59E0B] transition-all duration-300 ${
+            className={`h-full bg-[#D97706] transition-all duration-300 ${
               highlightedCategory && highlightedCategory !== 'cash'
                 ? 'opacity-30'
                 : 'opacity-100'
@@ -54,7 +54,7 @@ export const AllocationBar: React.FC<AllocationBarProps> = ({
         {invPct > 0 && (
           <div
             style={{ width: `${invPct}%` }}
-            className={`h-full bg-[#2BC48A] rounded-r-full transition-all duration-300 ${
+            className={`h-full bg-[#16A34A] rounded-r-full transition-all duration-300 ${
               highlightedCategory && highlightedCategory !== 'investment'
                 ? 'opacity-30'
                 : 'opacity-100'
@@ -65,7 +65,7 @@ export const AllocationBar: React.FC<AllocationBarProps> = ({
       </div>
 
       {/* Legend with interactive highlight on tap */}
-      <div className="flex items-center justify-between text-xs text-[#9CADBC] pt-0.5">
+      <div className="flex items-center justify-between text-xs text-[#5E6A75] pt-0.5">
         <button
           type="button"
           onClick={() => toggleHighlight('bank')}
@@ -84,7 +84,7 @@ export const AllocationBar: React.FC<AllocationBarProps> = ({
             highlightedCategory && highlightedCategory !== 'cash' ? 'opacity-40' : 'opacity-100'
           }`}
         >
-          <span className="w-2 h-2 rounded-full bg-[#F59E0B]" />
+          <span className="w-2 h-2 rounded-full bg-[#D97706]" />
           <span>Cash ({cashPct.toFixed(0)}%)</span>
         </button>
 
@@ -95,7 +95,7 @@ export const AllocationBar: React.FC<AllocationBarProps> = ({
             highlightedCategory && highlightedCategory !== 'investment' ? 'opacity-40' : 'opacity-100'
           }`}
         >
-          <span className="w-2 h-2 rounded-full bg-[#2BC48A]" />
+          <span className="w-2 h-2 rounded-full bg-[#16A34A]" />
           <span>Invested ({invPct.toFixed(0)}%)</span>
         </button>
       </div>

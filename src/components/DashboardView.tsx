@@ -72,24 +72,24 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
   return (
     <div className="space-y-4 pb-28 px-4 max-w-lg mx-auto">
-      {/* 1. Net worth hero card (Deep navy surface: #132238, border: #223854) */}
-      <div className="bg-[#132238] border border-[#223854] rounded-[20px] p-4 shadow-sm space-y-3">
+      {/* 1. Net worth hero card (Crisp white card on ivory surface) */}
+      <div className="bg-white border border-[#E8E3DA] rounded-[20px] p-4 shadow-sm space-y-3">
         <div className="flex items-center justify-between">
-          <span className="typography-label text-[#9CADBC] uppercase tracking-wider">
+          <span className="typography-label text-[#5E6A75] uppercase tracking-wider">
             Net worth
           </span>
           <span
             className={`typography-caption ${
-              syncStatus.isStale ? 'text-[#F59E0B]' : 'text-[#607387]'
+              syncStatus.isStale ? 'text-[#D97706]' : 'text-[#8C9BA8]'
             }`}
           >
             {syncStatus.text}
           </span>
         </div>
 
-        {/* Display-size total: 40px bold in Soft Gray (#E6E9EC) */}
+        {/* Display-size total: 38px bold in Charcoal (#111827) */}
         <div className="flex items-baseline justify-between gap-2">
-          <div className="typography-display text-[#E6E9EC]">
+          <div className="typography-display text-[#111827]">
             {formatMoney(displayValue, { isPrivate, alwaysIncludePaise: false })}
           </div>
           {sparklinePoints.length >= 2 && !isPrivate && (
@@ -106,11 +106,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             percent={netWorthChangePct}
             isPrivate={isPrivate}
           />
-          <span className="typography-caption text-[#9CADBC]">since last update</span>
+          <span className="typography-caption text-[#5E6A75]">since last update</span>
         </div>
 
         {/* 2. Allocation Bar */}
-        <div className="pt-2 border-t border-[#223854]">
+        <div className="pt-2 border-t border-[#E8E3DA]">
           <AllocationBar
             bankTotal={summary.bankBalance}
             cashTotal={summary.cashInHand}
@@ -120,9 +120,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
       </div>
 
-      {/* 5. Quick Actions: Exactly two persistent buttons (Primary blue: #1A73E8) */}
+      {/* Quick Actions: Exactly two persistent buttons */}
       <div className="grid grid-cols-2 gap-3">
-        {/* Primary button: solid Primary blue (#1A73E8), white text, 52px tall, 14px radius */}
+        {/* Primary button: solid Fintech blue (#1A73E8), white text, 52px tall, 14px radius */}
         <button
           type="button"
           onClick={onOpenBalanceLogger}
@@ -132,13 +132,13 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <span>Balance</span>
         </button>
 
-        {/* Secondary button: elevated surface (#1B2D4A), subtle border (#223854), light text (#E6E9EC), 52px tall */}
+        {/* Secondary button: warm elevated surface, warm border, dark text, 52px tall */}
         <button
           type="button"
           onClick={onOpenInvestmentLogger}
-          className="h-[52px] rounded-[14px] bg-[#1B2D4A] hover:bg-[#223854] active:scale-[0.98] border border-[#223854] text-[#E6E9EC] font-semibold text-[15px] flex items-center justify-center gap-2 transition-all"
+          className="h-[52px] rounded-[14px] bg-[#F3EFE6] hover:bg-[#EAE4D7] active:scale-[0.98] border border-[#E8E3DA] text-[#111827] font-semibold text-[15px] flex items-center justify-center gap-2 transition-all"
         >
-          <Plus className="w-5 h-5 text-[#9CADBC]" strokeWidth={2} />
+          <Plus className="w-5 h-5 text-[#5E6A75]" strokeWidth={2} />
           <span>Invest</span>
         </button>
       </div>
@@ -146,10 +146,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       {/* 3. Bank Accounts Section */}
       <div className="space-y-2.5">
         <div className="flex items-center justify-between px-1">
-          <h2 className="typography-label uppercase tracking-wider text-[#9CADBC]">
+          <h2 className="typography-label uppercase tracking-wider text-[#5E6A75]">
             Bank & Cash
           </h2>
-          <span className="typography-caption text-[#9CADBC]">
+          <span className="typography-caption text-[#5E6A75]">
             {formatMoney(totalLiquid, { isPrivate })}
           </span>
         </div>
@@ -163,7 +163,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             return (
               <div
                 key={account.name}
-                className="bg-[#132238] border border-[#223854] rounded-[20px] p-4 flex items-center justify-between"
+                className="bg-white border border-[#E8E3DA] rounded-[20px] p-4 flex items-center justify-between shadow-sm"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <MonogramAvatar
@@ -171,17 +171,17 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                     category={isCash ? 'cash' : 'bank'}
                   />
                   <div className="min-w-0">
-                    <div className="typography-body font-semibold text-[#E6E9EC] truncate max-w-[170px]">
+                    <div className="typography-body font-semibold text-[#111827] truncate max-w-[170px]">
                       {account.name}
                     </div>
-                    <div className="typography-caption text-[#9CADBC]">
+                    <div className="typography-caption text-[#5E6A75]">
                       {isCash ? 'Physical Cash' : meta?.type || 'Savings'}
                     </div>
                   </div>
                 </div>
 
                 <div className="text-right shrink-0">
-                  <div className="typography-amount-l text-[#E6E9EC]">
+                  <div className="typography-amount-l text-[#111827]">
                     {formatMoney(account.latestBalance, { isPrivate })}
                   </div>
                   <div className="mt-0.5">
@@ -201,10 +201,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       {/* 4. Investments Section */}
       <div className="space-y-2.5">
         <div className="flex items-center justify-between px-1">
-          <h2 className="typography-label uppercase tracking-wider text-[#9CADBC]">
+          <h2 className="typography-label uppercase tracking-wider text-[#5E6A75]">
             Investments
           </h2>
-          <span className="typography-caption text-[#9CADBC]">
+          <span className="typography-caption text-[#5E6A75]">
             {formatMoney(summary.currentInvestmentValue, { isPrivate })}
           </span>
         </div>
@@ -216,16 +216,16 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             return (
               <div
                 key={inv.name}
-                className="bg-[#132238] border border-[#223854] rounded-[20px] p-4 space-y-3"
+                className="bg-white border border-[#E8E3DA] rounded-[20px] p-4 space-y-3 shadow-sm"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3 min-w-0">
                     <MonogramAvatar name={inv.name} category="investment" />
                     <div className="min-w-0">
-                      <div className="typography-body font-semibold text-[#E6E9EC] truncate max-w-[170px]">
+                      <div className="typography-body font-semibold text-[#111827] truncate max-w-[170px]">
                         {inv.name}
                       </div>
-                      <div className="typography-caption text-[#9CADBC]">
+                      <div className="typography-caption text-[#5E6A75]">
                         {inv.platform ? `${inv.platform} · ` : ''}
                         {inv.type || 'Asset'}
                       </div>
@@ -233,13 +233,13 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   </div>
 
                   <div className="text-right shrink-0">
-                    <div className="typography-amount-l text-[#E6E9EC]">
+                    <div className="typography-amount-l text-[#111827]">
                       {formatMoney(inv.currentValue, { isPrivate })}
                     </div>
                     <div className="mt-0.5 flex items-center justify-end">
                       <span
                         className={`typography-caption font-medium ${
-                          isProfit ? 'text-[#2BC48A]' : 'text-[#FF6E8A]'
+                          isProfit ? 'text-[#16A34A]' : 'text-[#DC2626]'
                         }`}
                       >
                         {formatPercent(inv.returnPct, isPrivate)}
@@ -248,10 +248,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-[#223854] flex items-center justify-between typography-caption text-[#9CADBC]">
+                <div className="pt-2 border-t border-[#E8E3DA] flex items-center justify-between typography-caption text-[#5E6A75]">
                   <div>
                     <span>Invested: </span>
-                    <span className="text-[#E6E9EC] font-medium">
+                    <span className="text-[#111827] font-medium">
                       {formatMoney(inv.latestInvested, { isPrivate })}
                     </span>
                   </div>
@@ -259,7 +259,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                     <span>Profit/loss: </span>
                     <span
                       className={`font-medium ${
-                        isProfit ? 'text-[#2BC48A]' : 'text-[#FF6E8A]'
+                        isProfit ? 'text-[#16A34A]' : 'text-[#DC2626]'
                       }`}
                     >
                       {formatMoney(inv.latestEarnings, { isPrivate, isChange: false })}

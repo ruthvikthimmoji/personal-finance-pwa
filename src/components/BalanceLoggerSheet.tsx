@@ -91,7 +91,7 @@ export const BalanceLoggerSheet: React.FC<BalanceLoggerSheetProps> = ({
           particleCount: 50,
           spread: 55,
           origin: { y: 0.8 },
-          colors: ['#1A73E8', '#2BC48A', '#4285F4'],
+          colors: ['#1A73E8', '#16A34A', '#D97706', '#4285F4'],
           disableForReducedMotion: true,
         });
       }
@@ -115,32 +115,32 @@ export const BalanceLoggerSheet: React.FC<BalanceLoggerSheetProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 backdrop-blur-sm animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm animate-fade-in">
       <div
-        className="w-full max-w-lg bg-[#132238] border-t border-[#223854] rounded-t-[24px] max-h-[90vh] flex flex-col shadow-2xl sheet-transition"
+        className="w-full max-w-lg bg-white border-t border-[#E8E3DA] rounded-t-[24px] max-h-[90vh] flex flex-col shadow-2xl sheet-transition"
         role="dialog"
         aria-modal="true"
         aria-labelledby="balance-sheet-title"
       >
         {/* Drag handle */}
         <div className="w-full flex items-center justify-center pt-3 pb-1 cursor-grab">
-          <div className="w-10 h-1 bg-[#223854] rounded-full" />
+          <div className="w-10 h-1 bg-[#D5D0C7] rounded-full" />
         </div>
 
         {/* Sheet Header */}
-        <div className="flex items-center justify-between px-5 py-3 border-b border-[#223854]">
+        <div className="flex items-center justify-between px-5 py-3 border-b border-[#E8E3DA]">
           <div>
-            <h2 id="balance-sheet-title" className="typography-title text-[#E6E9EC]">
+            <h2 id="balance-sheet-title" className="typography-title text-[#111827]">
               Update balances
             </h2>
-            <p className="typography-caption text-[#9CADBC] mt-0.5">
+            <p className="typography-caption text-[#5E6A75] mt-0.5">
               Empty fields carry forward previous values
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="w-10 h-10 rounded-[14px] bg-[#1B2D4A] border border-[#223854] flex items-center justify-center text-[#9CADBC] hover:text-[#E6E9EC] active:scale-[0.98]"
+            className="w-10 h-10 rounded-[14px] bg-[#F3EFE6] border border-[#E8E3DA] flex items-center justify-center text-[#5E6A75] hover:text-[#111827] active:scale-[0.98]"
             aria-label="Close"
           >
             <X className="w-5 h-5" strokeWidth={1.75} />
@@ -151,14 +151,14 @@ export const BalanceLoggerSheet: React.FC<BalanceLoggerSheetProps> = ({
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
           {/* Date Selector */}
           <div>
-            <label className="typography-label text-[#9CADBC] block mb-1.5">
+            <label className="typography-label text-[#5E6A75] block mb-1.5">
               Date
             </label>
             <input
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="w-full h-[56px] px-4 rounded-[14px] bg-[#1B2D4A] border border-[#223854] text-[16px] text-[#E6E9EC] focus:outline-none focus:border-[#4285F4] focus:ring-2 focus:ring-[#4285F4]/20"
+              className="w-full h-[56px] px-4 rounded-[14px] bg-[#FAF8F5] border border-[#E8E3DA] text-[16px] text-[#111827] focus:outline-none focus:border-[#1A73E8] focus:ring-2 focus:ring-[#1A73E8]/20"
               required
             />
           </div>
@@ -172,17 +172,17 @@ export const BalanceLoggerSheet: React.FC<BalanceLoggerSheetProps> = ({
               return (
                 <div key={account.name} className="space-y-1">
                   <div className="flex items-center justify-between px-1">
-                    <span className="typography-label text-[#E6E9EC]">
+                    <span className="typography-label text-[#111827]">
                       {account.name}
                     </span>
-                    <span className="typography-caption text-[#9CADBC]">
+                    <span className="typography-caption text-[#5E6A75]">
                       Previous: {formatMoney(prevAmount)}
                     </span>
                   </div>
 
                   {/* 56px input with fixed ₹ prefix */}
                   <div className="relative flex items-center">
-                    <span className="absolute left-4 typography-body text-[#9CADBC] pointer-events-none select-none">
+                    <span className="absolute left-4 typography-body text-[#5E6A75] pointer-events-none select-none">
                       ₹
                     </span>
                     <input
@@ -192,7 +192,7 @@ export const BalanceLoggerSheet: React.FC<BalanceLoggerSheetProps> = ({
                       placeholder={formatIndianNumber(prevAmount, true)}
                       value={currentInput}
                       onChange={(e) => handleInputChange(account.name, e.target.value)}
-                      className="w-full h-[56px] pl-9 pr-4 rounded-[14px] bg-[#1B2D4A] border border-[#223854] text-[16px] text-[#E6E9EC] placeholder-[#607387] focus:outline-none focus:border-[#4285F4] focus:ring-2 focus:ring-[#4285F4]/20 transition-all font-variant-numeric: tabular-nums"
+                      className="w-full h-[56px] pl-9 pr-4 rounded-[14px] bg-[#FAF8F5] border border-[#E8E3DA] text-[16px] text-[#111827] placeholder-[#8C9BA8] focus:outline-none focus:border-[#1A73E8] focus:ring-2 focus:ring-[#1A73E8]/20 transition-all font-variant-numeric: tabular-nums"
                     />
                   </div>
                 </div>
@@ -202,19 +202,19 @@ export const BalanceLoggerSheet: React.FC<BalanceLoggerSheetProps> = ({
         </form>
 
         {/* Sticky Footer: Live Delta & Save Button */}
-        <div className="p-4 border-t border-[#223854] bg-[#132238] safe-bottom space-y-3">
+        <div className="p-4 border-t border-[#E8E3DA] bg-[#FAF8F5] safe-bottom space-y-3">
           {/* Live delta */}
           <div className="flex items-center justify-between text-xs px-1">
-            <span className="text-[#9CADBC]">
+            <span className="text-[#5E6A75]">
               Net change:
             </span>
             <span
               className={`font-semibold flex items-center gap-1 ${
                 delta > 0
-                  ? 'text-[#2BC48A]'
+                  ? 'text-[#16A34A]'
                   : delta < 0
-                  ? 'text-[#FF6E8A]'
-                  : 'text-[#9CADBC]'
+                  ? 'text-[#DC2626]'
+                  : 'text-[#5E6A75]'
               }`}
             >
               {delta > 0

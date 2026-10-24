@@ -2,32 +2,32 @@
 
 @layer base {
   :root {
-    --bg-base: #0D1B2A;
-    --bg-surface: #132238;
-    --bg-elevated: #1B2D4A;
-    --border-subtle: #223854;
+    --bg-base: #FAF8F5;
+    --bg-surface: #FFFFFF;
+    --bg-elevated: #F3EFE6;
+    --border-subtle: #E8E3DA;
     --brand-primary: #1A73E8;
     --brand-deep: #1558B0;
     --brand-glow: #4285F4;
-    --accent-gold: #F59E0B;
+    --accent-gold: #D97706;
 
-    --text-primary: #E6E9EC;
-    --text-secondary: #9CADBC;
-    --text-tertiary: #607387;
+    --text-primary: #111827;
+    --text-secondary: #5E6A75;
+    --text-tertiary: #8C9BA8;
 
-    --positive: #2BC48A;
-    --negative: #FF6E8A;
-    --warning: #F59E0B;
+    --positive: #16A34A;
+    --negative: #DC2626;
+    --warning: #D97706;
     --info: #1A73E8;
 
     --color-bank: #1A73E8;
-    --color-investments: #2BC48A;
-    --color-cash: #F59E0B;
+    --color-investments: #16A34A;
+    --color-cash: #D97706;
   }
 
   body {
-    font-family: 'Instagram Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    font-feature-settings: "tnum";
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-feature-settings: "tnum" 1, "cv05" 1, "cv08" 1;
     font-variant-numeric: tabular-nums;
     background-color: var(--bg-base);
     color: var(--text-primary);
@@ -44,46 +44,48 @@
   }
 }
 
-/* Typography styles */
+/* Typography styles (Standard Fintech: Inter + Tabular Num) */
 .typography-display {
-  font-family: 'Instagram Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 40px;
-  line-height: 44px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 38px;
+  line-height: 42px;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 .typography-title {
-  font-family: 'Instagram Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 24px;
-  line-height: 30px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.typography-amount-l {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 19px;
+  line-height: 24px;
   font-weight: 600;
   letter-spacing: -0.01em;
 }
 
-.typography-amount-l {
-  font-family: 'Instagram Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 20px;
-  line-height: 26px;
-  font-weight: 600;
-}
-
 .typography-body {
-  font-family: 'Instagram Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  line-height: 22px;
   font-weight: 400;
 }
 
 .typography-label {
-  font-family: 'Instagram Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 13px;
-  line-height: 18px;
-  font-weight: 500;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 .typography-caption {
-  font-family: 'Instagram Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 12px;
   line-height: 16px;
   font-weight: 400;
@@ -98,7 +100,7 @@
   padding-bottom: max(16px, env(safe-area-inset-bottom));
 }
 
-/* Bottom sheet transition easing: cubic-bezier(0.32, 0.72, 0, 1) */
+/* Bottom sheet transition easing */
 .sheet-transition {
   transition: transform 280ms cubic-bezier(0.32, 0.72, 0, 1), opacity 280ms ease-out;
 }
@@ -112,6 +114,6 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(34, 56, 84, 0.8);
+  background: rgba(232, 227, 218, 0.9);
   border-radius: 9999px;
 }

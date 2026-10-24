@@ -68,14 +68,14 @@ export const HistoryView: React.FC<HistoryViewProps> = ({
     <div className="space-y-4 pb-28 px-4 max-w-lg mx-auto">
       {/* Screen Title */}
       <div className="px-1 pt-1">
-        <h2 className="typography-title text-[#E6E9EC]">History</h2>
-        <p className="typography-caption text-[#9CADBC] mt-0.5">
+        <h2 className="typography-title text-[#111827]">History</h2>
+        <p className="typography-caption text-[#5E6A75] mt-0.5">
           Recorded updates from your Google Sheet
         </p>
       </div>
 
       {/* Segmented Control at Top: All · Balances · Investments */}
-      <div className="flex p-1 bg-[#132238] border border-[#223854] rounded-[14px]">
+      <div className="flex p-1 bg-[#F3EFE6] border border-[#E8E3DA] rounded-[14px]">
         {(['all', 'balance', 'investment'] as const).map((tab) => {
           const isActive = filter === tab;
           const label =
@@ -93,7 +93,7 @@ export const HistoryView: React.FC<HistoryViewProps> = ({
               className={`flex-1 h-9 rounded-[10px] text-xs font-semibold transition-all ${
                 isActive
                   ? 'bg-[#1A73E8] text-white shadow-sm'
-                  : 'text-[#9CADBC] hover:text-[#E6E9EC]'
+                  : 'text-[#5E6A75] hover:text-[#111827]'
               }`}
             >
               {label}
@@ -104,8 +104,8 @@ export const HistoryView: React.FC<HistoryViewProps> = ({
 
       {/* Empty State */}
       {combinedEntries.length === 0 ? (
-        <div className="bg-[#132238] border border-[#223854] rounded-[20px] p-8 text-center space-y-3 mt-6">
-          <p className="typography-body text-[#9CADBC]">
+        <div className="bg-white border border-[#E8E3DA] rounded-[20px] p-8 text-center space-y-3 mt-6 shadow-sm">
+          <p className="typography-body text-[#5E6A75]">
             Nothing logged yet. Add your first balance to start your timeline.
           </p>
           <button
@@ -123,8 +123,8 @@ export const HistoryView: React.FC<HistoryViewProps> = ({
           {Object.entries(groupedByMonth).map(([month, entries]) => (
             <div key={month} className="space-y-2.5">
               {/* Sticky Month Header */}
-              <div className="sticky top-[60px] z-10 bg-[#0D1B2A]/95 py-1 px-1 backdrop-blur-md">
-                <span className="typography-caption uppercase tracking-wider text-[#9CADBC] font-semibold">
+              <div className="sticky top-[60px] z-10 bg-[#FAF8F5]/95 py-1 px-1 backdrop-blur-md">
+                <span className="typography-caption uppercase tracking-wider text-[#5E6A75] font-semibold">
                   {month}
                 </span>
               </div>
@@ -138,26 +138,26 @@ export const HistoryView: React.FC<HistoryViewProps> = ({
                   return (
                     <div
                       key={entryId}
-                      className="bg-[#132238] border border-[#223854] rounded-[20px] overflow-hidden transition-all"
+                      className="bg-white border border-[#E8E3DA] rounded-[20px] overflow-hidden transition-all shadow-sm"
                     >
                       {/* Tappable Card Header */}
                       <button
                         type="button"
                         onClick={() => toggleExpand(entryId)}
-                        className="w-full p-4 flex items-center justify-between text-left hover:bg-[#1B2D4A]/40 active:bg-[#1B2D4A] transition-colors"
+                        className="w-full p-4 flex items-center justify-between text-left hover:bg-[#FAF8F5] active:bg-[#F3EFE6] transition-colors"
                       >
                         <div>
-                          <div className="typography-body font-semibold text-[#E6E9EC]">
+                          <div className="typography-body font-semibold text-[#111827]">
                             {formatDateLabel(entry.date)}
                           </div>
-                          <div className="typography-caption text-[#9CADBC] mt-0.5">
+                          <div className="typography-caption text-[#5E6A75] mt-0.5">
                             {entry.type === 'balance' ? 'Bank & Cash balances' : 'Portfolio valuation'}
                           </div>
                         </div>
 
                         <div className="flex items-center gap-3 text-right">
                           <div>
-                            <div className="typography-amount-l text-[#E6E9EC]">
+                            <div className="typography-amount-l text-[#111827]">
                               {formatMoney(entry.total, { isPrivate })}
                             </div>
                             <div className="mt-0.5">
@@ -168,14 +168,14 @@ export const HistoryView: React.FC<HistoryViewProps> = ({
                                   size="sm"
                                 />
                               ) : (
-                                <span className="typography-caption text-[#2BC48A] font-medium">
+                                <span className="typography-caption text-[#16A34A] font-medium">
                                   {formatMoney(entry.change, { isPrivate })} profit
                                 </span>
                               )}
                             </div>
                           </div>
 
-                          <div className="text-[#9CADBC]">
+                          <div className="text-[#5E6A75]">
                             {isExpanded ? (
                               <ChevronUp className="w-5 h-5" strokeWidth={1.75} />
                             ) : (
@@ -187,8 +187,8 @@ export const HistoryView: React.FC<HistoryViewProps> = ({
 
                       {/* Expanded Breakdown */}
                       {isExpanded && (
-                        <div className="px-4 pb-4 pt-2 border-t border-[#223854] bg-[#1B2D4A]/40 space-y-2">
-                          <div className="typography-caption uppercase tracking-wider text-[#9CADBC] mb-1">
+                        <div className="px-4 pb-4 pt-2 border-t border-[#E8E3DA] bg-[#FAF8F5] space-y-2">
+                          <div className="typography-caption uppercase tracking-wider text-[#5E6A75] mb-1 font-semibold">
                             Breakdown
                           </div>
                           {entry.type === 'balance' && entry.breakdown && (
@@ -204,9 +204,9 @@ export const HistoryView: React.FC<HistoryViewProps> = ({
                                       category={accName.toLowerCase().includes('cash') ? 'cash' : 'bank'}
                                       size="sm"
                                     />
-                                    <span className="text-[#E6E9EC]">{accName}</span>
+                                    <span className="text-[#111827]">{accName}</span>
                                   </div>
-                                  <span className="text-[#E6E9EC] font-medium">
+                                  <span className="text-[#111827] font-medium">
                                     {formatMoney(val, { isPrivate, alwaysIncludePaise: val < 1000 })}
                                   </span>
                                 </div>
@@ -228,15 +228,15 @@ export const HistoryView: React.FC<HistoryViewProps> = ({
                                   >
                                     <div className="flex items-center gap-2">
                                       <MonogramAvatar name={name} category="investment" size="sm" />
-                                      <span className="text-[#E6E9EC]">{name}</span>
+                                      <span className="text-[#111827]">{name}</span>
                                     </div>
                                     <div className="text-right">
-                                      <span className="text-[#E6E9EC] font-medium">
+                                      <span className="text-[#111827] font-medium">
                                         {formatMoney(totalVal, { isPrivate })}
                                       </span>
                                       <span
                                         className={`ml-1.5 ${
-                                          earnAmount >= 0 ? 'text-[#2BC48A]' : 'text-[#FF6E8A]'
+                                          earnAmount >= 0 ? 'text-[#16A34A]' : 'text-[#DC2626]'
                                         }`}
                                       >
                                         ({earnAmount >= 0 ? '+' : ''}{formatMoney(earnAmount, { isPrivate })})
